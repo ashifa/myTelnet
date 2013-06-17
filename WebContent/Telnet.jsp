@@ -1,0 +1,64 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="/struts-tags" prefix="s"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<link href="<s:url value="/mystyle.css"/>" rel="stylesheet"
+	type="text/css" />
+<title>bay Info</title>
+</head>
+<body>
+	<s:div>
+		<s:div cssClass="left">
+			<table border="1">
+
+				<tr>
+					<th>CMD Name</th>
+					<th>CMD Content</th>
+				</tr>
+				<s:iterator value="CMDMap">
+					<tr>
+						<td><s:property value="key" /></td>
+						<td><s:property value="value" /></td>
+					</tr>
+				</s:iterator>
+			</table>
+		</s:div>
+		<s:div cssClass="left">
+
+			<s:actionerror />
+			<s:form action="Telnet">
+				<s:token  />
+				<s:select list="CMDMap" label="Predefined CMD" name="selectedValue"
+					multiple="true" listKey="key" listValue="key" value="selectedValue"></s:select>
+
+				<s:textfield name="newCMD" label="Customize your CMD"
+					cssStyle="width:350px" />
+
+				<s:submit label="submit" />
+
+			</s:form>
+		</s:div>
+	</s:div>
+
+
+	<table border="1" class="queryResults">
+		<tr>
+			<th>Target/Bay Name</th>
+			<th>IP</th>
+			<s:iterator value="selectedValue">
+				<th><s:property /></th>
+			</s:iterator>
+		</tr>
+		<s:iterator value="tblist" var="line">
+			<tr>
+				<s:iterator value="line" var="td">
+					<td><s:property value="td" default="nothing" /></td>
+				</s:iterator>
+			</tr>
+		</s:iterator>
+	</table>
+
+</body>
+</html>
