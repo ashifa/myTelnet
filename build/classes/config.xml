@@ -16,7 +16,7 @@
 <entry key="11CMD_UpmCal1.cfg">cat /w/config/Upm1Cal.cfg|||^\w*$</entry>
 <entry key="11CMD_Optionkey">sok_test |||^.*optima.*INSTALLED.*$</entry>
 <entry key="11CMD_prescan.log">( sleep 0.5;  echo "cat prescan.log | grep 000  " ; sleep 1; ) | rsh vre|||.*000.*</entry>
-<entry key="CMD_CD-RW">grep CD-ROM /proc/scsi/scsi|||(?&lt;=Type:).*</entry>
+<entry key="11CMD_CD-RW">grep CD-ROM /proc/scsi/scsi|||(?&lt;=Type:).*</entry>
 <!--
 <entry key="CMD_VoxTool Version">cat /export/home/sdc/vxtl/VERSION|||.*_\d{2}.*</entry>
 <entry key="CMD_FuncTool Version">cat /export/home/sdc/MRFctl/VERSION|||\d{1,3}\.\d{1,3}\.\d{1,3}</entry>

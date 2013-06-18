@@ -41,10 +41,11 @@
 
 		<action name="Telnet" class="telnet.TelnetAction">
 			<result>/Telnet.jsp</result>
-
 		</action>
 
-
+		<action name="Test" class="test.Test">
+			<result>/Test.jsp</result>
+		</action>
 
 
 

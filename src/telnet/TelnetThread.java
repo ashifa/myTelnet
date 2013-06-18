@@ -7,7 +7,6 @@ package telnet;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -16,7 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.commons.net.telnet.InvalidTelnetOptionException;
 import org.apache.commons.net.telnet.TelnetClient;
 
 /**
@@ -24,7 +22,6 @@ import org.apache.commons.net.telnet.TelnetClient;
  * @author 305020571
  */
 public class TelnetThread implements Callable<List<String>> {
-
 	private TelnetClient telnet = new TelnetClient();
 	private InputStream in;
 	private PrintStream out;
@@ -45,14 +42,26 @@ public class TelnetThread implements Callable<List<String>> {
 		this.CMDlist = CMDlist;
 	}
 
-	private boolean intconnect(String host, int port) throws SocketException,
-			IOException, InvalidTelnetOptionException {
+	private boolean intconnect(String host, int port) {
+		boolean retval = true;
 		telnet.setConnectTimeout(3000);
-		telnet.connect(host, port);
-		in = telnet.getInputStream();
-		out = new PrintStream(telnet.getOutputStream());
+		try {
+			telnet.connect(host, port);
+			in = telnet.getInputStream();
+			out = new PrintStream(telnet.getOutputStream());
+			telnet.sendAYT(1000);
+			this.login();
+		} catch (IOException e) {
+			retval = false;
+		} catch (IllegalArgumentException e) {
+			retval = false;
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			retval = false;
+			e.printStackTrace();
+		}
 
-		return true;
+		return retval;
 	}
 
 	private void login() throws IOException {
@@ -119,7 +128,7 @@ public class TelnetThread implements Callable<List<String>> {
 			sb.append(m.group().trim());
 			sb.append("\n");
 		}
-		return sb.toString();
+		return sb.toString().replaceAll("\n\n\n", "\n");
 	}
 
 	@Override
@@ -128,10 +137,18 @@ public class TelnetThread implements Callable<List<String>> {
 		List<String> list = new ArrayList<String>();
 		list.add(this.hostname);
 		list.add(this.ip);
+
+		if (this.intconnect(this.ip, 23) == true) {
+			list.add("On");
+		} else {
+			list.add("Off");
+			for (int n = 0; n < this.CMDlist.size(); n++) {
+				list.add("");
+			}
+			return list;
+		}
+
 		try {
-			this.intconnect(this.ip, 23);
-			this.telnet.sendAYT(1000);
-			this.login();
 
 			for (String str : CMDlist) {// some command may not working, it
 										// needs backup command.
@@ -146,24 +163,11 @@ public class TelnetThread implements Callable<List<String>> {
 				}
 				list.add(execResult);
 			}
-		} catch (IllegalArgumentException ex) {
-			Logger.getLogger(TelnetThread.class.getName()).log(Level.SEVERE,
-					this.ip, ex);
-			list.add(ex.getMessage());
-		} catch (InterruptedException ex) {
-//			Logger.getLogger(TelnetThread.class.getName()).log(Level.SEVERE,
-//					this.ip, ex);
-			list.add(ex.getMessage());
-		} catch (InvalidTelnetOptionException ex) {
-			Logger.getLogger(TelnetThread.class.getName()).log(Level.SEVERE,
-					this.ip, ex);
+
 		} catch (IOException ex) {
-	//		Logger.getLogger(TelnetThread.class.getName()).log(Level.SEVERE,
-	//				this.ip, ex);
 			list.add(ex.getMessage());
 		} finally {
 			this.disconnect();
-
 		}
 		return list;
 	}

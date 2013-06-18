@@ -10,7 +10,7 @@
 </head>
 <body>
 	<s:div>
-		<s:div cssClass="left">
+	<%-- 	<s:div cssClass="left">
 			<table border="1">
 
 				<tr>
@@ -24,17 +24,17 @@
 					</tr>
 				</s:iterator>
 			</table>
-		</s:div>
+		</s:div> --%>
 		<s:div cssClass="left">
 
 			<s:actionerror />
 			<s:form action="Telnet">
-				<s:token  />
+				
 				<s:select list="CMDMap" label="Predefined CMD" name="selectedValue"
 					multiple="true" listKey="key" listValue="key" value="selectedValue"></s:select>
 
-				<s:textfield name="newCMD" label="Customize your CMD"
-					cssStyle="width:350px" />
+				<s:textfield name="customizedCMD" label="Customized CMD"
+					cssStyle="width:350px" tooltip="cat /usr/g/service/log/spt.results" />
 
 				<s:submit label="submit" />
 
@@ -47,6 +47,7 @@
 		<tr>
 			<th>Target/Bay Name</th>
 			<th>IP</th>
+			<th>On/Off</th>
 			<s:iterator value="selectedValue">
 				<th><s:property /></th>
 			</s:iterator>

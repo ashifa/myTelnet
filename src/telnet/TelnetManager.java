@@ -36,7 +36,7 @@ public class TelnetManager {
 	static {
 		if (false == readConfig()) {
 			System.exit(1);
-		}
+		}System.out.println("in Telnet static");
 		parseConfig();
 	}
 
@@ -123,7 +123,7 @@ public class TelnetManager {
 		// take out the results and build an html output
 		StringBuilder sb = new StringBuilder();
 		sb.append("<table border=\"1\"> \n");
-		sb.append("<tr><th>targetName</th><th>IP</th>");
+		sb.append("<tr><th>targetName</th><th>IP</th><th>On/Off</th>");
 		for (String str : TelnetManager.CMDMap.keySet()) {
 			sb.append("<th>");
 			sb.append(str);
