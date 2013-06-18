@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package telnet;
+package telnet.service;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,11 +23,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
+
 /**
  * 
  * @author 305020571
  */
-public class TelnetManager {
+public class TelnetServiceImp implements TelnetService {
 
 	private static Properties config = new Properties();
 	private static Map<String, String> targetMap = new TreeMap<String, String>();
@@ -36,29 +37,30 @@ public class TelnetManager {
 	static {
 		if (false == readConfig()) {
 			System.exit(1);
-		}System.out.println("in Telnet static");
+		}
+		System.out.println("in Telnet static");
 		parseConfig();
 	}
 
 	public static void main(String[] args) {
 
-		System.out.println(TelnetManager.getVersion());
+		System.out.println(TelnetServiceImp.getVersion());
 
 	}
 
-	public static Map<String, String> getTargetMap() {
+	public Map<String, String> getTargetMap() {
 		return targetMap;
 	}
 
-	public static void setTargetMap(Map<String, String> targetMap) {
-		TelnetManager.targetMap = targetMap;
+	public void setTargetMap(Map<String, String> targetMap) {
+		TelnetServiceImp.targetMap = targetMap;
 	}
 
-	public static Map<String, String> getCMDMap() {
+	public Map<String, String> getCMDMap() {
 		return CMDMap;
 	}
 
-	public static void setCMDMap(Map<String, String> cMDMap) {
+	public void setCMDMap(Map<String, String> cMDMap) {
 		CMDMap = cMDMap;
 	}
 
@@ -67,15 +69,15 @@ public class TelnetManager {
 			URL targetInfo = Thread.currentThread().getContextClassLoader()
 					.getResource("config.xml");
 			if (targetInfo != null) {
-				TelnetManager.config.loadFromXML(new FileInputStream(targetInfo
+				TelnetServiceImp.config.loadFromXML(new FileInputStream(targetInfo
 						.getFile()));
 			} else {
-				TelnetManager.config.loadFromXML(new FileInputStream(
+				TelnetServiceImp.config.loadFromXML(new FileInputStream(
 						"config.xml"));
 			}
 
 		} catch (IOException ex) {
-			Logger.getLogger(TelnetManager.class.getName()).log(Level.SEVERE,
+			Logger.getLogger(TelnetServiceImp.class.getName()).log(Level.SEVERE,
 					null, ex);
 			return false;
 		}
@@ -87,10 +89,10 @@ public class TelnetManager {
 		// extract the CMD and HOST
 		for (String str : config.stringPropertyNames()) {
 			if (str.startsWith("CMD")) {
-				TelnetManager.CMDMap.put(str.substring(4),
+				TelnetServiceImp.CMDMap.put(str.substring(4),
 						config.getProperty(str));
 			} else if (str.startsWith("HOST_")) {
-				TelnetManager.targetMap.put(str.substring(5),
+				TelnetServiceImp.targetMap.put(str.substring(5),
 						config.getProperty(str));
 			}
 		}
@@ -112,7 +114,7 @@ public class TelnetManager {
 		try {
 			es.awaitTermination(10, TimeUnit.SECONDS);
 		} catch (InterruptedException ex) {
-			Logger.getLogger(TelnetManager.class.getName()).log(Level.SEVERE,
+			Logger.getLogger(TelnetServiceImp.class.getName()).log(Level.SEVERE,
 					null, ex);
 		}
 		es.shutdownNow();
@@ -124,7 +126,7 @@ public class TelnetManager {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<table border=\"1\"> \n");
 		sb.append("<tr><th>targetName</th><th>IP</th><th>On/Off</th>");
-		for (String str : TelnetManager.CMDMap.keySet()) {
+		for (String str : TelnetServiceImp.CMDMap.keySet()) {
 			sb.append("<th>");
 			sb.append(str);
 			sb.append("</th>");
@@ -146,7 +148,7 @@ public class TelnetManager {
 					sbuilder.append(str);
 					sbuilder.append("</td>");
 				}
-				for (int i = rs.get().size() - 2; i < TelnetManager.CMDMap
+				for (int i = rs.get().size() - 2; i < TelnetServiceImp.CMDMap
 						.keySet().size(); i++) {// in some cases, not all column
 												// info was collectd, fill with
 												// empty block.
@@ -156,10 +158,10 @@ public class TelnetManager {
 				list.add(sbuilder.toString());
 
 			} catch (InterruptedException ex) {
-				Logger.getLogger(TelnetManager.class.getName()).log(
+				Logger.getLogger(TelnetServiceImp.class.getName()).log(
 						Level.SEVERE, null, ex);
 			} catch (ExecutionException ex) {
-				Logger.getLogger(TelnetManager.class.getName()).log(
+				Logger.getLogger(TelnetServiceImp.class.getName()).log(
 						Level.SEVERE, null, ex);
 			}
 		}
@@ -178,10 +180,10 @@ public class TelnetManager {
 			try {
 				retList.add(fl.get());
 			} catch (InterruptedException ex) {
-				Logger.getLogger(TelnetManager.class.getName()).log(
+				Logger.getLogger(TelnetServiceImp.class.getName()).log(
 						Level.SEVERE, null, ex);
 			} catch (ExecutionException ex) {
-				Logger.getLogger(TelnetManager.class.getName()).log(
+				Logger.getLogger(TelnetServiceImp.class.getName()).log(
 						Level.SEVERE, null, ex);
 			}
 		}
@@ -191,14 +193,14 @@ public class TelnetManager {
 	public static String getVersion() {
 
 		// start up thread based on these host name
-		List<Future<List<String>>> futureList = connectTarget(TelnetManager.CMDMap
+		List<Future<List<String>>> futureList = connectTarget(TelnetServiceImp.CMDMap
 				.values());
 		// Build the html table
 		return buildHtml(futureList);
 
 	}
 
-	public static List<List<String>> getVersion(Collection<String> CMDlist) {
+	public List<List<String>> getVersion(Collection<String> CMDlist) {
 
 		// start up thread based on these host name
 		List<Future<List<String>>> futureList = connectTarget(CMDlist);

@@ -39,11 +39,11 @@
 			<!-- <interceptor-ref name="myStack" /> -->
 		</action>
 
-		<action name="Telnet" class="telnet.TelnetAction">
+		<action name="Telnet" class="telnet.action.TelnetAction">
 			<result>/Telnet.jsp</result>
 		</action>
 
-		<action name="Test" class="test.Test">
+		<action name="Test" class="telnet.action.Test">
 			<result>/Test.jsp</result>
 		</action>
 

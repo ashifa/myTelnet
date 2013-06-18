@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package telnet;
+package telnet.service;
 
 import java.io.IOException;
 import java.io.InputStream;

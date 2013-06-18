@@ -1,28 +1,39 @@
-package telnet;
+package telnet.action;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
+import telnet.service.TelnetService;;
 
-@SuppressWarnings("serial")
 public class TelnetAction extends ActionSupport {
-
+	private static final long serialVersionUID = 5704419762979642412L;
+	/**
+	 * 
+	 */
+	private TelnetService telnetService;
 	private Map<String, String> targetMap;
 	private Map<String, String> CMDMap;
 	private String customizedCMD;
 	private List<List<String>> tblist;
 	private Set<String> selectedValue;
-	private int count=0;
+
 	public Set<String> getSelectedValue() {
 		return selectedValue;
 	}
 
 	public void setSelectedValue(Set<String> selectedValue) {
 		this.selectedValue = selectedValue;
+	}
+
+	public TelnetService getTelnetService() {
+		return telnetService;
+	}
+
+	public void setTelnetService(TelnetService telnetService) {
+		this.telnetService = telnetService;
 	}
 
 	public String getCustomizedCMD() {
@@ -56,11 +67,11 @@ public class TelnetAction extends ActionSupport {
 	public List<List<String>> getTblist() {
 		return this.tblist;
 	}
+
 	@Override
 	public String execute() {
-		System.out.println(this.count++);
-		this.setTargetMap(TelnetManager.getTargetMap());
-		this.setCMDMap(TelnetManager.getCMDMap());
+		this.setTargetMap(telnetService.getTargetMap());
+		this.setCMDMap(telnetService.getCMDMap());
 		System.out.println(this.selectedValue);
 		if (this.selectedValue == null)
 			return Action.SUCCESS;
@@ -78,7 +89,7 @@ public class TelnetAction extends ActionSupport {
 			selectedCMD.add(this.CMDMap.get(str));
 		}
 
-		List<List<String>> list = TelnetManager.getVersion(selectedCMD);
+		List<List<String>> list = telnetService.getVersion(selectedCMD);
 		this.setTblist(list);
 
 		return Action.SUCCESS;
