@@ -1,12 +1,12 @@
-package com.ge.logparser;
+package graphicallog.action;
 
 import java.util.List;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
-
+import graphicallog.service.*;
 @SuppressWarnings("serial")
-public class LogViewerAction extends ActionSupport {
+public class GraphicalLogAction extends ActionSupport {
 	/**
 	 * @param args
 	 */
@@ -14,7 +14,15 @@ public class LogViewerAction extends ActionSupport {
 		// TODO Auto-generated method stub
 
 	}
+	GraphicalLogService graphicLogService;
 
+	public GraphicalLogService getGraphicLogService() {
+		return graphicLogService;
+	}
+
+	public void setGraphicLogService(GraphicalLogService graphicLogService) {
+		this.graphicLogService = graphicLogService;
+	}
 	List<LogRecord> list;
 
 	public List<LogRecord> getList() {
@@ -26,8 +34,8 @@ public class LogViewerAction extends ActionSupport {
 	}
  
 	public String execute() {
-		LogParser.parseFile();
-		this.setList(LogParser.list);
+		list = graphicLogService.parseFile("gesys_GEHC.log");
+
 		System.out.println("in logview action");
 		return Action.SUCCESS;
 	}

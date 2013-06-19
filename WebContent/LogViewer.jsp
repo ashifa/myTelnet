@@ -21,11 +21,7 @@
 
 	</table>
 
-	<s:form>
-		<s:token />
-		<s:submit name="submit">
-		</s:submit>
-	</s:form>
+
 
 </body>
 </html>

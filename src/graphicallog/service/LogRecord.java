@@ -1,8 +1,8 @@
-package com.ge.logparser;
+package graphicallog.service;
 
 import java.util.Date;
 
-class LogRecord{
+public class LogRecord{
 	Date date;
 	String content;
 	public Date getDate() {

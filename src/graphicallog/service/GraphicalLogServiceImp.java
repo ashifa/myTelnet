@@ -1,4 +1,4 @@
-package com.ge.logparser;
+package graphicallog.service;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,27 +9,28 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LogParser {
+public class GraphicalLogServiceImp implements GraphicalLogService {
 
-	static ArrayList<LogRecord> list = new ArrayList<LogRecord>();
-	static DateFormat sdf = new SimpleDateFormat("EEE MMM dd hh:mm:ss yyyy",
-			Locale.ENGLISH);
-	static DateFormat dateFormatter = new SimpleDateFormat(
+	private static ArrayList<LogRecord> list = new ArrayList<LogRecord>();
+	private static DateFormat sdf = new SimpleDateFormat(
+			"EEE MMM dd hh:mm:ss yyyy", Locale.ENGLISH);
+	private static DateFormat dateFormatter = new SimpleDateFormat(
 			"yyyy-MM-dd \n HH:mm:ss");
 
 	public static void main(String[] args) throws IOException, ParseException {
 
-		parseFile();
+		new GraphicalLogServiceImp().parseFile("gesys_GEHC.log");
 
 	}
 
-	public static void parseFile() {
+	public List<LogRecord> parseFile(String logFile) {
 		URL targetInfo = Thread.currentThread().getContextClassLoader()
-				.getResource("gesys_GEHC.log");
+				.getResource(logFile);
 		BufferedReader reader;
 		try {
 			if (targetInfo != null) {
@@ -38,7 +39,7 @@ public class LogParser {
 						new FileReader(targetInfo.getFile()));
 
 			} else {
-				reader = new BufferedReader(new FileReader("gesys_GEHC.log"));
+				reader = new BufferedReader(new FileReader(logFile));
 			}
 
 			StringBuilder strBuild = new StringBuilder();
@@ -60,8 +61,8 @@ public class LogParser {
 					if (m.find() == true) {
 						String found = m.group().trim();
 						Date date = sdf.parse(found);// "Fri Apr 18 17:22:06 2013"
-						String[] dd = { dateFormatter.format(date), tmpStr };
-						list.add(new LogRecord(date,tmpStr));
+
+						list.add(new LogRecord(date, tmpStr));
 					}
 				} else {
 					strBuild.append(str + "\n");
@@ -79,7 +80,8 @@ public class LogParser {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		return list;
 
 	}
 }
-

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
@@ -10,17 +9,22 @@
 
 
 
+	<!--this is graphical log related beans -->
+	<bean id="graphicLogService" class="graphicallog.service.GraphicalLogServiceImp"></bean>
+	<bean id="graphicalLog" scope="prototype"
+		class="graphicallog.action.GraphicalLogAction">
+		<property name="graphicalLog" ref="graphicalLog" />
+	</bean>
+
+	<!--this is test related beans -->
+	<bean id="test" class="telnet.action.Test">
+	</bean>
+
+
+	<!--this is telnet related beans -->
 	<bean id="telnetService" class="telnet.service.TelnetServiceImp"></bean>
-	<bean id="LogViewerAction" scope="prototype"
-		class="com.ge.logparser.LogViewerAction">
-	</bean>
-
-
-	<bean id="Test" class="telnet.action.Test">
-	</bean>
-                    
-	<bean id="telnetAction" class="telnet.action.TelnetAction" >
-	<property name="telnetService" ref="telnetService"/>
+	<bean id="telnetAction" class="telnet.action.TelnetAction">
+		<property name="telnetService" ref="telnetService" />
 	</bean>
 
 
