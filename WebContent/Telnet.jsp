@@ -9,6 +9,7 @@
 <title>bay Info</title>
 </head>
 <body>
+<jsp:include page="HeadMenu.jsp"/>
 	<s:div>
 	<%-- 	<s:div cssClass="left">
 			<table border="1">
@@ -28,7 +29,7 @@
 		<s:div cssClass="left">
 
 			<s:actionerror />
-			<s:form action="Telnet">
+			<s:form action="telnet">
 				
 				<s:select list="CMDMap" label="Predefined CMD" name="selectedValue"
 					multiple="true" listKey="key" listValue="key" value="selectedValue"></s:select>

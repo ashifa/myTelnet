@@ -9,7 +9,7 @@
 <title>Log Viewer</title>
 </head>
 <body>
-
+<jsp:include page="HeadMenu.jsp"/>
 	<table border="1">
 		<s:iterator value="list" begin="0" end="100" var="logRecord">
 			<tr>
