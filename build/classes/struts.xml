@@ -33,17 +33,18 @@
 				result="error" />
 		</global-exception-mappings>
 
-		<action name="LogViewerAction" class="com.ge.logparser.LogViewerAction">
+		<action name="graphicalLog" class="graphicallog.action.GraphicalLogAction">
 			<result>/LogViewer.jsp</result>
 			<result name="invalid.token">/Error.jsp</result>
 			<!-- <interceptor-ref name="myStack" /> -->
 		</action>
 
-		<action name="Telnet" class="telnet.TelnetAction">
+		<action name="telnet" class="telnet.action.TelnetAction">
 			<result>/Telnet.jsp</result>
+			<result name="DEFAULT">/TelnetDefault.jsp</result>
 		</action>
 
-		<action name="Test" class="test.Test">
+		<action name="test" class="telnet.action.Test">
 			<result>/Test.jsp</result>
 		</action>
 
