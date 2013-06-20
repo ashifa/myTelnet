@@ -4,16 +4,11 @@
  */
 package telnet.service;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
-import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+import telnet.dao.TelnetDAO;
 
 /**
  * 
@@ -30,83 +25,40 @@ import java.util.logging.Logger;
  */
 public class TelnetServiceImp implements TelnetService {
 
-	private static Properties config = new Properties();
-	private static Map<String, String> targetMap = new TreeMap<String, String>();
-	private static Map<String, String> CMDMap = new TreeMap<String, String>();
-
-	static {
-		if (false == readConfig()) {
-			System.exit(1);
-		}
-		System.out.println("in Telnet static");
-		parseConfig();
-	}
+	private TelnetDAO telnetDAO = new TelnetDAO();
 
 	public static void main(String[] args) {
 
-		System.out.println(TelnetServiceImp.getVersion());
+		System.out.println(new TelnetServiceImp().getVersion());
 
 	}
 
 	public Map<String, String> getTargetMap() {
-		return targetMap;
+		return this.telnetDAO.getTargetMap();
 	}
 
 	public void setTargetMap(Map<String, String> targetMap) {
-		TelnetServiceImp.targetMap = targetMap;
+		this.telnetDAO.setTargetMap(targetMap);
 	}
 
 	public Map<String, String> getCMDMap() {
-		return CMDMap;
+		return this.telnetDAO.getCMDMap();
 	}
 
 	public void setCMDMap(Map<String, String> cMDMap) {
-		CMDMap = cMDMap;
+		this.telnetDAO.setCMDMap(cMDMap);
 	}
 
-	private static boolean readConfig() {
-		try {
-			URL targetInfo = Thread.currentThread().getContextClassLoader()
-					.getResource("config.xml");
-			if (targetInfo != null) {
-				TelnetServiceImp.config.loadFromXML(new FileInputStream(targetInfo
-						.getFile()));
-			} else {
-				TelnetServiceImp.config.loadFromXML(new FileInputStream(
-						"config.xml"));
-			}
-
-		} catch (IOException ex) {
-			Logger.getLogger(TelnetServiceImp.class.getName()).log(Level.SEVERE,
-					null, ex);
-			return false;
-		}
-		return true;
-
-	}
-
-	private static void parseConfig() {
-		// extract the CMD and HOST
-		for (String str : config.stringPropertyNames()) {
-			if (str.startsWith("CMD")) {
-				TelnetServiceImp.CMDMap.put(str.substring(4),
-						config.getProperty(str));
-			} else if (str.startsWith("HOST_")) {
-				TelnetServiceImp.targetMap.put(str.substring(5),
-						config.getProperty(str));
-			}
-		}
-	}
-
-	private static List<Future<List<String>>> connectTarget(
-			Collection<String> CMDlist) {
-		ExecutorService es = Executors.newFixedThreadPool(targetMap.size());
+	private List<Future<List<String>>> connectTarget(Collection<String> CMDlist) {
+		ExecutorService es = Executors.newFixedThreadPool(this.telnetDAO
+				.getTargetMap().size());
 		List<Future<List<String>>> futureList = new ArrayList<Future<List<String>>>();
-		for (String hostname : targetMap.keySet()) {
+		for (String hostname : this.telnetDAO.getTargetMap().keySet()) {
 			Future<List<String>> rs = es.submit(new TelnetThread(hostname,
-					targetMap.get(hostname), config.getProperty("userName"),
-					config.getProperty("passWord"), config
-							.getProperty("prompt"), CMDlist));
+					this.telnetDAO.getTargetMap().get(hostname), 
+					this.telnetDAO.getConfig().getProperty("userName"),
+					this.telnetDAO.getConfig().getProperty("passWord"),
+					this.telnetDAO.getConfig().getProperty("prompt"), CMDlist));
 			futureList.add(rs);
 		}
 		es.shutdown();
@@ -114,19 +66,19 @@ public class TelnetServiceImp implements TelnetService {
 		try {
 			es.awaitTermination(10, TimeUnit.SECONDS);
 		} catch (InterruptedException ex) {
-			Logger.getLogger(TelnetServiceImp.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(TelnetServiceImp.class.getName()).log(
+					Level.SEVERE, null, ex);
 		}
 		es.shutdownNow();
 		return futureList;
 	}
 
-	static String buildHtml(List<Future<List<String>>> futureList) {
+	String buildHtml(List<Future<List<String>>> futureList) {
 		// take out the results and build an html output
 		StringBuilder sb = new StringBuilder();
 		sb.append("<table border=\"1\"> \n");
 		sb.append("<tr><th>targetName</th><th>IP</th><th>On/Off</th>");
-		for (String str : TelnetServiceImp.CMDMap.keySet()) {
+		for (String str : this.telnetDAO.getCMDMap().keySet()) {
 			sb.append("<th>");
 			sb.append(str);
 			sb.append("</th>");
@@ -148,10 +100,13 @@ public class TelnetServiceImp implements TelnetService {
 					sbuilder.append(str);
 					sbuilder.append("</td>");
 				}
-				for (int i = rs.get().size() - 2; i < TelnetServiceImp.CMDMap
-						.keySet().size(); i++) {// in some cases, not all column
-												// info was collectd, fill with
-												// empty block.
+				for (int i = rs.get().size() - 2; i < this.telnetDAO
+						.getCMDMap().keySet().size(); i++) {// in some cases,
+															// not all column
+															// info was
+															// collectd, fill
+															// with
+															// empty block.
 					sbuilder.append("<td></td>");
 				}
 				sbuilder.append("</tr>\n");
@@ -190,17 +145,18 @@ public class TelnetServiceImp implements TelnetService {
 		return retList;
 	}
 
-	public static String getVersion() {
+	public String getVersion() {
 
 		// start up thread based on these host name
-		List<Future<List<String>>> futureList = connectTarget(TelnetServiceImp.CMDMap
-				.values());
+		List<Future<List<String>>> futureList = connectTarget(this.telnetDAO
+				.getCMDMap().values());
 		// Build the html table
 		return buildHtml(futureList);
 
 	}
 
-	public List<List<String>> getVersion(Collection<String> CMDlist) {
+	@Override
+	public List<List<String>> getNewVersion(Collection<String> CMDlist) {
 
 		// start up thread based on these host name
 		List<Future<List<String>>> futureList = connectTarget(CMDlist);
@@ -217,6 +173,13 @@ public class TelnetServiceImp implements TelnetService {
 		li.add(Arrays.asList("aa3", "bb3", "cc3"));
 		return li;
 
+	}
+
+
+	@Override
+	public List<List<String>> getOldVersion() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

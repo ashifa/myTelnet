@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface TelnetService {
-	public List<List<String>> getVersion(Collection<String> CMDlist);
+	public List<List<String>> getNewVersion(Collection<String> CMDlist);
+
+	public List<List<String>> getOldVersion();
 
 	public Map<String, String> getTargetMap();
 

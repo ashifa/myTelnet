@@ -1,9 +1,12 @@
 package telnet.action;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
+
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import telnet.service.TelnetService;;
@@ -18,13 +21,13 @@ public class TelnetAction extends ActionSupport {
 	private Map<String, String> CMDMap;
 	private String customizedCMD;
 	private List<List<String>> tblist;
-	private Set<String> selectedValue;
+	private List<String> selectedValue;
 
-	public Set<String> getSelectedValue() {
+	public List<String> getSelectedValue() {
 		return selectedValue;
 	}
 
-	public void setSelectedValue(Set<String> selectedValue) {
+	public void setSelectedValue(List<String> selectedValue) {
 		this.selectedValue = selectedValue;
 	}
 
@@ -73,8 +76,13 @@ public class TelnetAction extends ActionSupport {
 		this.setTargetMap(telnetService.getTargetMap());
 		this.setCMDMap(telnetService.getCMDMap());
 		System.out.println(this.selectedValue);
-		if (this.selectedValue == null)
-			return Action.SUCCESS;
+		if (this.selectedValue == null){
+			List<List<String>> list = telnetService.getOldVersion();
+			this.setTblist(list);
+			return"DEFAULT";
+		}
+		
+		
 		if (!this.customizedCMD.isEmpty()) {
 			String customizedCMD = this.customizedCMD.contains("|||") ? this.customizedCMD
 					: this.customizedCMD + "|||.*";
@@ -83,13 +91,18 @@ public class TelnetAction extends ActionSupport {
 		} else {
 			this.selectedValue.remove("customizedCMD");
 		}
+		if(!this.selectedValue.contains(" Software Version")){
+			this.selectedValue.add(0," Software Version");
+		}
+		
+		
 		List<String> selectedCMD = new ArrayList<String>();
 
 		for (String str : this.selectedValue) {
 			selectedCMD.add(this.CMDMap.get(str));
 		}
 
-		List<List<String>> list = telnetService.getVersion(selectedCMD);
+		List<List<String>> list = telnetService.getNewVersion(selectedCMD);
 		this.setTblist(list);
 
 		return Action.SUCCESS;

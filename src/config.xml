@@ -10,7 +10,7 @@
 <entry key="CMD_Install Data">rpm -qi `rpm -qa | grep MrpA`|||(?&lt;=Install Date:).+(?=Build Host)</entry>
 <entry key="CMD_Spt.restults">cat /usr/g/service/log/spt.results|||.*=.*</entry>
 <entry key="11CMD_CORE File">cd /usr/g/service/log/; ls  -1 *core* |||^(?!cd).*(core|CORE).*$</entry>
-<entry key="CMD_Software Version">testrecord|||.*_\d{4}.*###getver|egrep 'cclass|insite'|||.*_\d{4}.*</entry>
+<entry key="CMD_ Software Version">testrecord|||.*_\d{4}.*###getver|egrep 'cclass|insite'|||.*_\d{4}.*</entry>
 <entry key="CMD_Mgd_stage">head -1 /w/config/mgd_stage|||^\w*$</entry>
 <entry key="11CMD_Search gesys.log">grep "The device listed below failed to respond in the given time." /usr/g/service/log/gesys_*log |wc |||^.*$</entry>
 <entry key="11CMD_UpmCal1.cfg">cat /w/config/Upm1Cal.cfg|||^\w*$</entry>
