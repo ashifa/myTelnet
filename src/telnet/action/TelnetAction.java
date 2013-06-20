@@ -9,7 +9,9 @@ import java.util.TreeSet;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
-import telnet.service.TelnetService;;
+import telnet.service.TelnetService;
+
+;
 
 public class TelnetAction extends ActionSupport {
 	private static final long serialVersionUID = 5704419762979642412L;
@@ -17,8 +19,7 @@ public class TelnetAction extends ActionSupport {
 	 * 
 	 */
 	private TelnetService telnetService;
-	private Map<String, String> targetMap;
-	private Map<String, String> CMDMap;
+
 	private String customizedCMD;
 	private List<List<String>> tblist;
 	private List<String> selectedValue;
@@ -48,19 +49,19 @@ public class TelnetAction extends ActionSupport {
 	}
 
 	public Map<String, String> getTargetMap() {
-		return targetMap;
+		return this.telnetService.getTargetMap();
 	}
 
 	public void setTargetMap(Map<String, String> targetMap) {
-		this.targetMap = targetMap;
+		this.telnetService.setTargetMap(targetMap);
 	}
 
 	public Map<String, String> getCMDMap() {
-		return CMDMap;
+		return this.telnetService.getCMDMap();
 	}
 
 	public void setCMDMap(Map<String, String> cMDMap) {
-		CMDMap = cMDMap;
+		this.telnetService.setCMDMap(cMDMap);
 	}
 
 	public void setTblist(List<List<String>> tblist) {
@@ -73,16 +74,15 @@ public class TelnetAction extends ActionSupport {
 
 	@Override
 	public String execute() {
-		this.setTargetMap(telnetService.getTargetMap());
-		this.setCMDMap(telnetService.getCMDMap());
+
 		System.out.println(this.selectedValue);
-		if (this.selectedValue == null){
+		if (this.selectedValue == null) {
+			System.out.println("read from DB");
 			List<List<String>> list = telnetService.getOldVersion();
 			this.setTblist(list);
-			return"DEFAULT";
+			return "DEFAULT";
 		}
-		
-		
+
 		if (!this.customizedCMD.isEmpty()) {
 			String customizedCMD = this.customizedCMD.contains("|||") ? this.customizedCMD
 					: this.customizedCMD + "|||.*";
@@ -91,15 +91,15 @@ public class TelnetAction extends ActionSupport {
 		} else {
 			this.selectedValue.remove("customizedCMD");
 		}
-		if(!this.selectedValue.contains(" Software Version")){
-			this.selectedValue.add(0," Software Version");
+		if (!this.selectedValue.contains(" Software Version")) {
+			this.selectedValue.add( " Software Version");// must go first
+			Collections.sort(this.selectedValue);
 		}
-		
-		
+
 		List<String> selectedCMD = new ArrayList<String>();
 
 		for (String str : this.selectedValue) {
-			selectedCMD.add(this.CMDMap.get(str));
+			selectedCMD.add(this.telnetService.getCMDMap().get(str));
 		}
 
 		List<List<String>> list = telnetService.getNewVersion(selectedCMD);

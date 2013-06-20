@@ -17,6 +17,8 @@
 <entry key="11CMD_Optionkey">sok_test |||^.*optima.*INSTALLED.*$</entry>
 <entry key="11CMD_prescan.log">( sleep 0.5;  echo "cat prescan.log | grep 000  " ; sleep 1; ) | rsh vre|||.*000.*</entry>
 <entry key="11CMD_CD-RW">grep CD-ROM /proc/scsi/scsi|||(?&lt;=Type:).*</entry>
+<entry key="CMD_ICN Revision">grep chassis_asset /w/config/vre.cfg|||(?&lt;=icn).*.*</entry>
+<entry key="CMD_OS Version">cat /mr.closure.OS|||(?&lt;=is :).*</entry>
 <!--
 <entry key="CMD_VoxTool Version">cat /export/home/sdc/vxtl/VERSION|||.*_\d{2}.*</entry>
 <entry key="CMD_FuncTool Version">cat /export/home/sdc/MRFctl/VERSION|||\d{1,3}\.\d{1,3}\.\d{1,3}</entry>
@@ -28,8 +30,6 @@
 <entry key="CMD_Insite/IIP Version">cat /usr/g/insite/VERSION|||.*(?&lt;=Linux)</entry>
 <entry key="CMD_Government body">grep govBody /w/config/MRconfig.cfg|||(?&lt;=govBody =).*</entry>
 <entry key="CMD_ICN number">grep num_of_icns /w/config/vre.cfg|||(?&lt;=icns=).*</entry>
-<entry key="CMD_ICN Revision">grep chassis_asset /w/config/vre.cfg|||(?&lt;=icn).*.*</entry>
-<entry key="CMD_mgd_stage">head -1 /w/config/mgd_stage|||^(a).*</entry>
 <entry key="CMD_OS Version">cat /mr.closure.OS|||(?&lt;=is :).*</entry>
 <entry key="CMD_Patch Version">ls / | grep mr.closure.patch | cut -c 12- ; ls / | grep mr.closure.Service |cut -c 12-|||^(p).*</entry>
 <entry key="CMD_ICN Serial Number">hartViewer -c | awk ' /icn1/ { getline; getline; getline; geltine; getline; print $0;}'|||(?&lt;=Serial).*</entry>
@@ -37,6 +37,7 @@
 <entry key="11CMD_Installed Option Key">/usr/g/bin/sok_test | grep INSTALLED | cut -f1,2 |||.*</entry>
 -->
 <!--<entry key="HOST_*">XX.XX.XX.XX</entry> -->
+<entry key="HOST_BJ Bay01">3.35.117.204</entry>
 <entry key="HOST_BJ Bay02">3.35.117.207</entry>
 <entry key="HOST_BJ Bay03">3.35.117.201</entry>
 <entry key="HOST_BJ Bay04">3.35.117.197</entry>
@@ -45,7 +46,7 @@
 <entry key="HOST_BJ Bay07">3.36.157.241</entry>
 <entry key="HOST_BJ Bay08">3.36.157.177</entry>
 <entry key="HOST_BJ Bay10">3.36.157.179</entry>
-<entry key="HOST_BJ Ivy">3.35.117.178</entry><!-- 
+<!-- <entry key="HOST_BJ Ivy">3.35.117.178</entry>
 <entry key="HOST_BJ Lavender">3.35.117.159</entry>
 <entry key="HOST_BJ Tulip">3.35.117.219</entry>
 <entry key="HOST_BJ Calla">3.35.117.196</entry>
@@ -55,6 +56,29 @@
 <entry key="HOST_BJ Rick">3.35.117.203</entry>
 <entry key="HOST_BJ Oak">3.35.117.216</entry>
 <entry key="HOST_BJ Violet">3.35.117.205</entry>
+<entry key="HOST_Hino st01">3.246.249.31</entry>
+<entry key="HOST_Hino st02">3.246.249.32</entry>
+<entry key="HOST_Hino st03">3.246.249.33</entry>
+<entry key="HOST_Hino st04">3.246.249.34</entry>
+<entry key="HOST_Hino st05">3.246.249.35</entry>
+<entry key="HOST_Hino st06">3.246.249.36</entry>
+<entry key="HOST_Hino st07">3.246.249.37</entry>
+<entry key="HOST_Hino Bay01">3.246.249.201</entry>
+<entry key="HOST_Hino Bay02">3.246.249.202</entry>
+<entry key="HOST_Hino Bay03">3.246.249.203</entry>
+<entry key="HOST_Hino Bay04">3.246.249.204</entry>
+<entry key="HOST_Hino Bay05">3.246.249.205</entry>
+<entry key="HOST_Hino Bay06">3.246.249.206</entry>
+<entry key="HOST_Hino Bay07">3.246.249.207</entry>
+<entry key="HOST_Hino Bay08">3.246.249.208</entry>
+<entry key="HOST_Hino Bay09">3.246.249.209</entry>
+<entry key="HOST_Hino tamachan">3.36.9.202</entry>
+<entry key="HOST_Hino hanawa">3.36.9.204</entry>
+<entry key="HOST_Hino maruo">3.36.9.205</entry>
+<entry key="HOST_Hino hamaji">3.36.9.206</entry>
+<entry key="HOST_Hino migiwa">3.36.9.207</entry>
+<entry key="HOST_Hino bootaro">3.36.9.208</entry>
+<entry key="HOST_Hino hidejii_">3.36.9.220</entry>
 <entry key="HOST_MKE T01">3.7.25.1</entry>
 <entry key="HOST_MKE T02">3.7.25.2</entry>
 <entry key="HOST_MKE T03">3.7.25.3</entry>
@@ -113,5 +137,5 @@
 <entry key="HOST_MKE T56">3.7.25.56</entry>
 <entry key="HOST_MKE T57">3.7.25.57</entry>
 <entry key="HOST_MKE T58">3.7.25.58</entry>
-<entry key="HOST_MKE T59">3.7.25.59</entry>-->
+<entry key="HOST_MKE T59">3.7.25.59</entry> -->
 </properties>
