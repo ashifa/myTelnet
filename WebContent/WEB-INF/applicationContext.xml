@@ -22,6 +22,7 @@
 
 
 	<!--this is telnet related beans -->
+	<bean id="telnetserv" class="telnet.service.TelnetServiceDbImp"></bean>
 	<bean id="telnetService" class="telnet.service.TelnetServiceImp"></bean>
 	<bean id="telnetAction" class="telnet.action.TelnetAction">
 		<property name="telnetService" ref="telnetService" />
@@ -53,5 +54,5 @@
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-
+    <tx:annotation-driven transaction-manager="transactionManager" />
 </beans>
