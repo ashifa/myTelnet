@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -56,6 +57,14 @@ public class TelnetServiceDbImp implements TelnetService {
 
 	}
 
+	public Set<String> getSelectedTargetRegion() {
+		return this.telnetDAO.getSelectedTargetRegion();
+	}
+
+	public void setSelectedTargetRegion(Set<String> selectedTargetRegion) {
+		this.telnetDAO.setSelectedTargetRegion(selectedTargetRegion);
+	}
+
 	private void saveVersion(List<List<String>> listArg) {
 		for (List<String> strList : listArg) {
 			if (strList.get(2).equals("On")) {
@@ -73,13 +82,21 @@ public class TelnetServiceDbImp implements TelnetService {
 		ExecutorService es = Executors.newFixedThreadPool(this.telnetDAO
 				.getTargetMap().size());
 		List<Future<List<String>>> futureList = new ArrayList<Future<List<String>>>();
+
 		for (String hostname : this.telnetDAO.getTargetMap().keySet()) {
-			Future<List<String>> rs = es.submit(new TelnetThread(hostname,
-					this.telnetDAO.getTargetMap().get(hostname), this.telnetDAO
-							.getConfig().getProperty("userName"),
-					this.telnetDAO.getConfig().getProperty("passWord"),
-					this.telnetDAO.getConfig().getProperty("prompt"), CMDlist));
-			futureList.add(rs);
+			for (String region : this.telnetDAO.getSelectedTargetRegion()) {
+				if (hostname.contains(region)) {
+					Future<List<String>> rs = es.submit(new TelnetThread(
+							hostname, this.telnetDAO.getTargetMap().get(
+									hostname), this.telnetDAO.getConfig()
+									.getProperty("userName"), this.telnetDAO
+									.getConfig().getProperty("passWord"),
+							this.telnetDAO.getConfig().getProperty("prompt"),
+							CMDlist));
+					futureList.add(rs);
+				}
+			}
+
 		}
 		es.shutdown();
 

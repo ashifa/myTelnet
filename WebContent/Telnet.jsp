@@ -9,9 +9,9 @@
 <title>bay Info</title>
 </head>
 <body>
-<jsp:include page="HeadMenu.jsp"/>
+	<jsp:include page="HeadMenu.jsp" />
 	<s:div>
-	<%-- 	<s:div cssClass="left">
+		<%-- 	<s:div cssClass="left">
 			<table border="1">
 
 				<tr>
@@ -26,17 +26,18 @@
 				</s:iterator>
 			</table>
 		</s:div> --%>
-		<s:div cssClass="left">
+		<s:div cssClass="left" cssStyle="border: 1px dashed #3c78b5;margin: 10px; margin-top: 0px;" >
 
 			<s:actionerror />
 			<s:form action="telnet">
-				
+
 				<s:select list="CMDMap" label="Predefined CMD" name="selectedValue"
 					multiple="true" listKey="key" listValue="key" value="selectedValue"></s:select>
 
 				<s:textfield name="customizedCMD" label="Customized CMD"
-					cssStyle="width:350px" tooltip="cat /usr/g/service/log/spt.results" />
+					cssStyle="width:350px" />
 
+<s:checkboxlist name="selectedTargetRegion" label="Regions" list="{'BJ','Hino','MKE'}" value="selectedTargetRegion"/>
 				<s:submit label="submit" />
 
 			</s:form>
@@ -53,12 +54,21 @@
 				<th><s:property /></th>
 			</s:iterator>
 		</tr>
-		<s:iterator value="tblist" var="line">
-			<tr>
-				<s:iterator value="line" var="td">
-					<td><s:property value="td" default="nothing" /></td>
-				</s:iterator>
-			</tr>
+		<s:iterator value="tblist" var="line" status="rowstatus">
+			<s:if test="#rowstatus.odd == true">
+				<tr class="even">
+					<s:iterator value="line" var="td">
+						<td><s:property value="td" default="nothing" /></td>
+					</s:iterator>
+				</tr>
+			</s:if>
+			<s:else>
+				<tr>
+					<s:iterator value="line" var="td">
+						<td><s:property value="td" default="nothing" /></td>
+					</s:iterator>
+				</tr>
+			</s:else>
 		</s:iterator>
 	</table>
 

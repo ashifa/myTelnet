@@ -6,6 +6,7 @@
 <entry key="passWord">adw2.0</entry>
 <entry key="prompt">]</entry>
 <entry key="waitingTime">10</entry>
+<entry key="selectedTargetRegion">BJ</entry><!-- Beijing,Hino,MKE -->
 <!--<entry key="CMD_*">CMDxxxxxx|||result MatchPattern </entry> -->
 <entry key="CMD_Install Data">rpm -qi `rpm -qa | grep MrpA`|||(?&lt;=Install Date:).+(?=Build Host)</entry>
 <entry key="CMD_Spt.restults">cat /usr/g/service/log/spt.results|||.*=.*</entry>
@@ -46,7 +47,7 @@
 <entry key="HOST_BJ Bay07">3.36.157.241</entry>
 <entry key="HOST_BJ Bay08">3.36.157.177</entry>
 <entry key="HOST_BJ Bay10">3.36.157.179</entry>
-<!-- <entry key="HOST_BJ Ivy">3.35.117.178</entry>
+<entry key="HOST_BJ Ivy">3.35.117.178</entry>
 <entry key="HOST_BJ Lavender">3.35.117.159</entry>
 <entry key="HOST_BJ Tulip">3.35.117.219</entry>
 <entry key="HOST_BJ Calla">3.35.117.196</entry>
@@ -137,5 +138,5 @@
 <entry key="HOST_MKE T56">3.7.25.56</entry>
 <entry key="HOST_MKE T57">3.7.25.57</entry>
 <entry key="HOST_MKE T58">3.7.25.58</entry>
-<entry key="HOST_MKE T59">3.7.25.59</entry> -->
+<entry key="HOST_MKE T59">3.7.25.59</entry>
 </properties>

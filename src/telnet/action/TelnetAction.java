@@ -1,11 +1,9 @@
 package telnet.action;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
@@ -22,13 +20,22 @@ public class TelnetAction extends ActionSupport {
 
 	private String customizedCMD;
 	private List<List<String>> tblist;
-	private List<String> selectedValue;
+	private Set<String> selectedValue;
 
-	public List<String> getSelectedValue() {
+
+	public Set<String> getSelectedTargetRegion() {
+		return this.telnetService.getSelectedTargetRegion();
+	}
+
+	public void setSelectedTargetRegion(Set<String> selectedTargetRegion) {
+		this.telnetService.setSelectedTargetRegion(selectedTargetRegion);
+	}
+
+	public Set<String> getSelectedValue() {
 		return selectedValue;
 	}
 
-	public void setSelectedValue(List<String> selectedValue) {
+	public void setSelectedValue(Set<String> selectedValue) {
 		this.selectedValue = selectedValue;
 	}
 
@@ -71,9 +78,12 @@ public class TelnetAction extends ActionSupport {
 	public List<List<String>> getTblist() {
 		return this.tblist;
 	}
+	
+ 
 
 	@Override
 	public String execute() {
+
 
 		System.out.println(this.selectedValue);
 		if (this.selectedValue == null) {
@@ -93,7 +103,7 @@ public class TelnetAction extends ActionSupport {
 		}
 		if (!this.selectedValue.contains(" Software Version")) {
 			this.selectedValue.add( " Software Version");// must go first
-			Collections.sort(this.selectedValue);
+			 
 		}
 
 		List<String> selectedCMD = new ArrayList<String>();

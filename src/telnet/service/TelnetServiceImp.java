@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -180,6 +181,18 @@ public class TelnetServiceImp implements TelnetService {
 	public List<List<String>> getOldVersion() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Set<String> getSelectedTargetRegion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setSelectedTargetRegion(Set<String> selectedTargetRegion) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
