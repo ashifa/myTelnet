@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -63,6 +64,22 @@ public class TelnetServiceDbImp implements TelnetService {
 
 	public void setSelectedTargetRegion(Set<String> selectedTargetRegion) {
 		this.telnetDAO.setSelectedTargetRegion(selectedTargetRegion);
+	}
+
+	private Set<String> selectedCMD = new TreeSet<String>();
+
+	public Set<String> getSelectedCMD() {
+		return selectedCMD;
+	}
+
+	public void setSelectedCMD(Set<String> selectedCMD) {
+		this.selectedCMD.clear();
+		this.selectedCMD.addAll(selectedCMD);
+	}
+
+	public TelnetServiceDbImp() {
+		System.out.println("in constructor of " + this.getClass());
+		this.getSelectedCMD().add(" Software Version");
 	}
 
 	private void saveVersion(List<List<String>> listArg) {
@@ -127,9 +144,13 @@ public class TelnetServiceDbImp implements TelnetService {
 		return retList;
 	}
 
-	public List<List<String>> getNewVersion(Collection<String> CMDlist) {
+	public List<List<String>> getNewVersion() {
 		// start up thread based on these host name
-		List<Future<List<String>>> futureList = connectTarget(CMDlist);
+		List<String> CMDs = new ArrayList<String>();
+		for (String str : this.getSelectedCMD()) {
+			CMDs.add(this.getCMDMap().get(str));
+		}
+		List<Future<List<String>>> futureList = connectTarget(CMDs);
 		return buildRaw(futureList);
 
 	}

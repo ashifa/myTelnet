@@ -1,12 +1,11 @@
 package telnet.service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public interface TelnetService {
-	public List<List<String>> getNewVersion(Collection<String> CMDlist);
+	public List<List<String>> getNewVersion();
 
 	public List<List<String>> getOldVersion();
 
@@ -21,4 +20,8 @@ public interface TelnetService {
 	public Set<String> getSelectedTargetRegion();
 
 	public void setSelectedTargetRegion(Set<String> selectedTargetRegion);
+
+	public Set<String> getSelectedCMD();
+
+	public void setSelectedCMD(Set<String> selectedCMD);
 }

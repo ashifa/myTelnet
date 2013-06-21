@@ -7,4 +7,3 @@
     <img alt="aaa" height=50 src=<s:url value="logo.jpg"/> />
 </p>
 </s:div>
-<hr/>

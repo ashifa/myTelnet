@@ -4,11 +4,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,7 +26,7 @@ public class TelnetDAO {
 	private Properties config = new Properties();
 	private Map<String, String> targetMap = new TreeMap<String, String>();
 	private Map<String, String> CMDMap = new TreeMap<String, String>();
-	private Set<String> selectedTargetRegion = new TreeSet<String>();
+	private Set<String> selectedTargetRegion = new HashSet<String>();
 
 	public Set<String> getSelectedTargetRegion() {
 		return selectedTargetRegion;
@@ -61,10 +61,10 @@ public class TelnetDAO {
 	}
 
 	public TelnetDAO() {
+		System.out.println("in constructor of "+ this.getClass());
 		if (false == readConfig()) {
 			System.exit(1);
 		}
-		System.out.println("in Telnet static");
 		parseConfig();
 	}
 
@@ -99,6 +99,6 @@ public class TelnetDAO {
 		}
 		String[]tmp=config.getProperty("selectedTargetRegion").split(",");
 		Collections.addAll(this.selectedTargetRegion, tmp);
-		System.out.println(this.selectedTargetRegion);
+
 	}
 }

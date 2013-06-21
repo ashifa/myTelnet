@@ -26,18 +26,20 @@
 				</s:iterator>
 			</table>
 		</s:div> --%>
-		<s:div cssClass="left" cssStyle="border: 1px dashed #3c78b5;margin: 10px; margin-top: 0px;" >
+		<s:div cssClass="left"
+			cssStyle="border: 1px dashed #3c78b5;margin: 10px; margin-top: 0px;">
 
 			<s:actionerror />
 			<s:form action="telnet">
 
-				<s:select list="CMDMap" label="Predefined CMD" name="selectedValue"
-					multiple="true" listKey="key" listValue="key" value="selectedValue"></s:select>
+				<s:select list="CMDMap" label="Predefined CMD" name="SelectedCMD"
+					multiple="true" listKey="key" listValue="key" value="SelectedCMD"></s:select>
 
 				<s:textfield name="customizedCMD" label="Customized CMD"
 					cssStyle="width:350px" />
 
-<s:checkboxlist name="selectedTargetRegion" label="Regions" list="{'BJ','Hino','MKE'}" value="selectedTargetRegion"/>
+				<s:checkboxlist name="selectedTargetRegion" label="Regions"
+					list="{'BJ','Hino','MKE'}" value="selectedTargetRegion" />
 				<s:submit label="submit" />
 
 			</s:form>
@@ -50,7 +52,7 @@
 			<th>Target/Bay Name</th>
 			<th>IP</th>
 			<th>On/Off</th>
-			<s:iterator value="selectedValue">
+			<s:iterator value="selectedCMD">
 				<th><s:property /></th>
 			</s:iterator>
 		</tr>

@@ -1,6 +1,6 @@
 package telnet.action;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,8 +20,16 @@ public class TelnetAction extends ActionSupport {
 
 	private String customizedCMD;
 	private List<List<String>> tblist;
-	private Set<String> selectedValue;
 
+
+
+	public Set<String> getSelectedCMD() {
+		return this.telnetService.getSelectedCMD();
+	}
+
+	public void setSelectedCMD(Set<String> selectedCMD) {
+		this.telnetService.setSelectedCMD(selectedCMD);
+	}
 
 	public Set<String> getSelectedTargetRegion() {
 		return this.telnetService.getSelectedTargetRegion();
@@ -31,13 +39,7 @@ public class TelnetAction extends ActionSupport {
 		this.telnetService.setSelectedTargetRegion(selectedTargetRegion);
 	}
 
-	public Set<String> getSelectedValue() {
-		return selectedValue;
-	}
 
-	public void setSelectedValue(Set<String> selectedValue) {
-		this.selectedValue = selectedValue;
-	}
 
 	public TelnetService getTelnetService() {
 		return telnetService;
@@ -85,8 +87,8 @@ public class TelnetAction extends ActionSupport {
 	public String execute() {
 
 
-		System.out.println(this.selectedValue);
-		if (this.selectedValue == null) {
+		System.out.println(this.getSelectedCMD());
+		if (this.customizedCMD==null) {
 			System.out.println("read from DB");
 			List<List<String>> list = telnetService.getOldVersion();
 			this.setTblist(list);
@@ -97,27 +99,25 @@ public class TelnetAction extends ActionSupport {
 			String customizedCMD = this.customizedCMD.contains("|||") ? this.customizedCMD
 					: this.customizedCMD + "|||.*";
 			this.getCMDMap().put("customizedCMD", customizedCMD);
-			this.selectedValue.add("customizedCMD");
+			this.getSelectedCMD().add("customizedCMD");
 		} else {
-			this.selectedValue.remove("customizedCMD");
+			this.getSelectedCMD().remove("customizedCMD");
 		}
-		if (!this.selectedValue.contains(" Software Version")) {
-			this.selectedValue.add( " Software Version");// must go first
+		if (!this.getSelectedCMD().contains(" Software Version")) {
+			this.getSelectedCMD().add( " Software Version");// must go first
 			 
 		}
 
-		List<String> selectedCMD = new ArrayList<String>();
 
-		for (String str : this.selectedValue) {
-			selectedCMD.add(this.telnetService.getCMDMap().get(str));
-		}
-
-		List<List<String>> list = telnetService.getNewVersion(selectedCMD);
+		List<List<String>> list = telnetService.getNewVersion();
 		this.setTblist(list);
 
 		return Action.SUCCESS;
 	}
 
+	public TelnetAction(){
+		System.out.println("in constructor of "+ this.getClass());
+	}
 	public static void main(String[] args) {
 		TelnetAction ta = new TelnetAction();
 		ta.execute();
