@@ -120,7 +120,7 @@ public class TelnetServiceDbImp implements TelnetService {
 		try {
 			es.awaitTermination(10, TimeUnit.SECONDS);
 		} catch (InterruptedException ex) {
-			Logger.getLogger(TelnetServiceImp.class.getName()).log(
+			Logger.getLogger(TelnetServiceDbImp.class.getName()).log(
 					Level.SEVERE, null, ex);
 		}
 		es.shutdownNow();
@@ -133,10 +133,10 @@ public class TelnetServiceDbImp implements TelnetService {
 			try {
 				retList.add(fl.get());
 			} catch (InterruptedException ex) {
-				Logger.getLogger(TelnetServiceImp.class.getName()).log(
+				Logger.getLogger(TelnetServiceDbImp.class.getName()).log(
 						Level.SEVERE, null, ex);
 			} catch (ExecutionException ex) {
-				Logger.getLogger(TelnetServiceImp.class.getName()).log(
+				Logger.getLogger(TelnetServiceDbImp.class.getName()).log(
 						Level.SEVERE, null, ex);
 			}
 		}

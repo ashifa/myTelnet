@@ -12,7 +12,6 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import telnet.service.TelnetServiceImp;
 
 public class TelnetDAO {
 
@@ -80,7 +79,7 @@ public class TelnetDAO {
 			}
 
 		} catch (IOException ex) {
-			Logger.getLogger(TelnetServiceImp.class.getName()).log(
+			Logger.getLogger(TelnetDAO.class.getName()).log(
 					Level.SEVERE, null, ex);
 			return false;
 		}
