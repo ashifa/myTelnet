@@ -13,7 +13,7 @@
 	<bean id="graphicLogService" class="graphicallog.service.GraphicalLogServiceImp"></bean>
 	<bean id="graphicalLog" scope="prototype"
 		class="graphicallog.action.GraphicalLogAction">
-		<property name="graphicalLog" ref="graphicalLog" />
+		<property name="graphicalLog" ref="graphicLogService" />
 	</bean>
 
 	<!--this is test related beans -->
@@ -22,7 +22,6 @@
 
 
 	<!--this is telnet related beans -->
-<!-- 	<bean id="telnetServ" class="telnet.service.TelnetServiceDbImp"></bean> -->
 	<bean id="telnetService" class="telnet.service.TelnetServiceDbImp"></bean>
 	<bean id="telnetAction" class="telnet.action.TelnetAction">
 		<property name="telnetService" ref="telnetService" />
