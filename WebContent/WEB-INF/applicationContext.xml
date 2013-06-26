@@ -22,7 +22,7 @@
 
 
 	<!--this is telnet related beans -->
-	<bean id="telnetService" class="telnet.service.TelnetServiceDbImp"></bean>
+	<bean id="telnetService" class="telnet.service.TelnetServiceDbImp"  scope="prototype"></bean>
 	<bean id="telnetAction" class="telnet.action.TelnetAction">
 		<property name="telnetService" ref="telnetService" />
 	</bean>

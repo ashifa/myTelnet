@@ -1,13 +1,17 @@
 package telnet.action;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import telnet.model.Cmd;
 import telnet.model.Visitor;
 
 import com.opensymphony.xwork2.Action;
@@ -53,8 +57,28 @@ public class Test extends ActionSupport {
 		vis.setIp(request.getRemoteAddr());
 		vis.setHostName(request.getRemoteHost());
 		vis.setDate(new Date());
+		Cmd a= new Cmd();
+		a.setName("11");
+		a.setValue("value");
+		Cmd b= new Cmd();
+		b.setName("22");
+		b.setValue("value");
+		HashSet<Cmd> set = new HashSet<Cmd>();
+		set.add(a);
+		set.add(b);
+		vis.setCmd(set );
 
 		em.merge(vis);
+		Query query = Test.em.createQuery("select p FROM Visitor p");
+		@SuppressWarnings("unchecked")
+		List<Visitor>list = query.getResultList();
+		for(Visitor itr : list){
+			System.out.println(itr.getHostName());
+			System.out.println(itr.getIp());
+			System.out.println(itr.getDate());
+			System.out.println(itr.getCmd());
+		}
+		
 		return Action.SUCCESS;
 	}
 
