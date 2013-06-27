@@ -3,6 +3,8 @@ package telnet.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -10,6 +12,8 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Cmd {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int cmdId;
 	private String name;
 	private String value;
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -38,6 +42,14 @@ public class Cmd {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public int getCmdId() {
+		return cmdId;
+	}
+
+	public void setCmdId(int cmdId) {
+		this.cmdId = cmdId;
 	}
 
 }

@@ -6,17 +6,30 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
 public class Visitor {
+
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int visitorId;
 	private Date date;
 	private String ip;
 	private String hostName;
-	@OneToMany(mappedBy="visitor",cascade=CascadeType.ALL,fetch=FetchType.LAZY) 
+	@OneToMany(mappedBy = "visitor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Cmd> cmd;
+
+	public int getVisitorId() {
+		return visitorId;
+	}
+
+	public void setVisitorId(int visitorId) {
+		this.visitorId = visitorId;
+	}
 
 	public String getIp() {
 		return ip;
