@@ -52,4 +52,10 @@ public class Cmd {
 		this.cmdId = cmdId;
 	}
 
+	@Override
+	public String toString() {
+		return "[" + this.getName() + " " + this.getValue() + "]";
+
+	}
+
 }

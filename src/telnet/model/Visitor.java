@@ -62,4 +62,10 @@ public class Visitor {
 	public void setCmd(Set<Cmd> cmd) {
 		this.cmd = cmd;
 	}
+
+	@Override
+	public String toString() {
+		return "[" + this.getHostName() + " " + this.getIp() + " "
+				+ this.getDate() + " " + this.getCmd() + "]";
+	}
 }

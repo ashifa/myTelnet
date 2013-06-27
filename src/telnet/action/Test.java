@@ -77,10 +77,8 @@ public class Test extends ActionSupport {
 		@SuppressWarnings("unchecked")
 		List<Visitor> list = query.getResultList();
 		for (Visitor itr : list) {
-			System.out.println(itr.getHostName());
-			System.out.println(itr.getIp());
-			System.out.println(itr.getDate());
-			System.out.println(itr.getCmd());
+			System.out.println(itr);
+
 		}
 
 		return Action.SUCCESS;
