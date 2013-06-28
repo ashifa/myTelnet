@@ -22,8 +22,6 @@ table.queryResults th {
 	color: #ffffff;
 }
 
-
-
 table.queryResults tr.even {
 	background-color: #EEFFDD;
 }
@@ -32,10 +30,10 @@ table.queryResults tr:hover {
 	background-color: #AAF2D3;
 }
 
-table.queryResults div.left{
-	float:left;
+div.left {
+	float: left;
 }
 
-table.queryResults div.right{
-	float:right;
+div.right {
+	float: right;
 }

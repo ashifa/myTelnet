@@ -40,8 +40,9 @@
 		</action>
 
 		<action name="telnet" class="telnet.action.TelnetAction">
-			<result>/Telnet.jsp</result>
+			<result >/Telnet.jsp</result>
 			<result name="DEFAULT">/TelnetDefault.jsp</result>
+			<result name="input">/Telnet.jsp</result>
 		</action>
 
 		<action name="test" class="telnet.action.Test">

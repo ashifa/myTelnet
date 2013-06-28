@@ -10,9 +10,9 @@
 </head>
 <body>
 	<jsp:include page="HeadMenu.jsp" />
-	<s:div>
 
-		<s:div cssClass="left"
+
+		<s:div cssClass=""
 			cssStyle="border: 1px dashed #3c78b5;margin: 10px; margin-top: 0px;">
 
 			<s:actionerror />
@@ -29,7 +29,7 @@
 
 			</s:form>
 		</s:div>
-	</s:div>
+	
 
 
 	<table border="1" class="queryResults">

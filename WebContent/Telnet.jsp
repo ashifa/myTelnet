@@ -10,41 +10,26 @@
 </head>
 <body>
 	<jsp:include page="HeadMenu.jsp" />
-	<s:div>
-		<%-- 	<s:div cssClass="left">
-			<table border="1">
 
-				<tr>
-					<th>CMD Name</th>
-					<th>CMD Content</th>
-				</tr>
-				<s:iterator value="CMDMap">
-					<tr>
-						<td><s:property value="key" /></td>
-						<td><s:property value="value" /></td>
-					</tr>
-				</s:iterator>
-			</table>
-		</s:div> --%>
-		<s:div cssClass="left"
-			cssStyle="border: 1px dashed #3c78b5;margin: 10px; margin-top: 0px;">
+	<s:div cssClass=""
+		cssStyle="border: 1px dashed #3c78b5;margin: 10px; margin-top: 0px;">
 
-			<s:actionerror />
-			<s:form action="telnet">
+		<s:actionerror />
+		<s:form action="telnet">
 
-				<s:select list="CMDMap" label="Predefined CMD" name="SelectedCMD"
-					multiple="true" listKey="key" listValue="key" value="SelectedCMD"></s:select>
+			<s:select list="CMDMap" label="Predefined CMD" name="SelectedCMD"
+				multiple="true" listKey="key" listValue="key" value="SelectedCMD"></s:select>
 
-				<s:textfield name="customizedCMD" label="Customized CMD"
-					cssStyle="width:350px" />
+			<s:textfield name="customizedCMD" label="Customized CMD"
+				cssStyle="width:350px" />
 
-				<s:checkboxlist name="selectedTargetRegion" label="Regions"
-					list="{'BJ','Hino','MKE'}" value="selectedTargetRegion" />
-				<s:submit label="submit" />
+			<s:checkboxlist name="selectedTargetRegion" label="Regions"
+				list="{'BJ','Hino','MKE'}" value="selectedTargetRegion" />
+			<s:submit label="submit" />
 
-			</s:form>
-		</s:div>
+		</s:form>
 	</s:div>
+
 
 
 	<table border="1" class="queryResults">

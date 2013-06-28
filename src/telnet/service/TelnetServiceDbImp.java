@@ -2,6 +2,8 @@ package telnet.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,11 +19,14 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.transaction.annotation.Transactional;
 
 import telnet.dao.TelnetDAO;
+import telnet.model.Cmd;
 import telnet.model.TargetInfo;
+import telnet.model.Visitor;
 
 @Transactional
 public class TelnetServiceDbImp implements TelnetService {
@@ -146,6 +151,7 @@ public class TelnetServiceDbImp implements TelnetService {
 
 	public List<List<String>> getNewVersion() {
 		// start up thread based on these host name
+		recordVisitor();
 		List<String> CMDs = new ArrayList<String>();
 		for (String str : this.getSelectedCMD()) {
 			CMDs.add(this.getCMDMap().get(str));
@@ -157,6 +163,7 @@ public class TelnetServiceDbImp implements TelnetService {
 
 	@SuppressWarnings("unchecked")
 	public List<List<String>> getOldVersion() {
+		recordVisitor();
 		Query query = this.em.createQuery("select p FROM TargetInfo p");
 		List<TargetInfo> list = query.getResultList();
 		List<List<String>> listRet = new ArrayList<List<String>>();
@@ -169,5 +176,38 @@ public class TelnetServiceDbImp implements TelnetService {
 		}
 		return listRet;
 
+	}
+
+	private void recordVisitor() {
+		HttpServletRequest request = org.apache.struts2.ServletActionContext
+				.getRequest();
+
+		Visitor vis = new Visitor();
+		vis.setIp(request.getRemoteAddr());
+		vis.setHostName(request.getRemoteHost());
+		vis.setDate(new Date());
+		vis.setPort(request.getRemotePort());
+		vis.setUser(request.getRemoteUser());
+		
+		HashSet<Cmd> set = new HashSet<Cmd>();		
+
+		Cmd cmd;
+		for (String str: this.getSelectedCMD()){
+			cmd = new Cmd();
+			cmd.setName(str);
+			cmd.setValue(this.getCMDMap().get(str));
+			cmd.setVisitor(vis);
+			set.add(cmd);
+		}
+		vis.setCmd(set);
+
+		em.merge(vis);
+/*		Query query = this.em.createQuery("select p FROM Visitor p");
+		@SuppressWarnings("unchecked")
+		List<Visitor> list = query.getResultList();
+		for (Visitor itr : list) {
+			System.out.println(itr);
+
+		}*/
 	}
 }

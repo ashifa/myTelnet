@@ -20,6 +20,8 @@ public class Visitor {
 	private Date date;
 	private String ip;
 	private String hostName;
+	private String user;
+	private int port;
 	@OneToMany(mappedBy = "visitor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Cmd> cmd;
 
@@ -63,9 +65,29 @@ public class Visitor {
 		this.cmd = cmd;
 	}
 
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+
+	}
+
 	@Override
 	public String toString() {
-		return "[" + this.getHostName() + " " + this.getIp() + " "
-				+ this.getDate() + " " + this.getCmd() + "]";
+		return "{\nHostName:" + this.getHostName() + "\nIp:" + this.getIp()
+				+ "\nDate:" + this.getDate() + "\nCMD:" + this.getCmd()
+				+ "\nuser:" + this.getUser() + "\nport:" + this.getPort()
+				+ "\n}";
 	}
+
 }
