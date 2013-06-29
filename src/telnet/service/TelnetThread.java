@@ -119,8 +119,10 @@ public class TelnetThread implements Callable<List<String>> {
 	private String execCMD(String CMD, String matchPattern) throws IOException {
 
 		String output = this.sendCommand(CMD);
-		output = output.substring(output.indexOf("\r\n") + 2,
-				output.lastIndexOf("\r\n"));// remove first and last line
+		if (output.indexOf("\r\n") != output.lastIndexOf("\r\n")) {
+			output = output.substring(output.indexOf("\r\n") + 2,
+					output.lastIndexOf("\r\n"));// remove first and last line
+		}
 		Pattern p = Pattern.compile(matchPattern, Pattern.MULTILINE);
 		Matcher m = p.matcher(output);
 		StringBuilder sb = new StringBuilder();
