@@ -1,23 +1,12 @@
 package telnet.action;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
+import java.util.Map;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.transaction.annotation.Transactional;
-
-import telnet.model.Cmd;
-import telnet.model.Visitor;
+import telnet.service.AdminService;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
-@Transactional
 public class Test extends ActionSupport {
 
 	/**
@@ -25,68 +14,60 @@ public class Test extends ActionSupport {
 	 */
 	private static final long serialVersionUID = 220817334781599319L;
 
-	private static EntityManager em;
+	private AdminService adminService;
 
-	@PersistenceContext
-	public void setEntityManager(EntityManager em) {
-		System.out.println("setting em" + em);
-		Test.em = em;
+	private Map<String, String> CMDMap;
+	private Map<String, String> targetMap;
+	private String mapKey;
+
+	public AdminService getAdminService() {
+		return adminService;
 	}
 
-	private int count = 0;
-	private static int sc = 0;
-
-	public int getCount() {
-		return count;
+	public void setAdminService(AdminService adminService) {
+		this.adminService = adminService;
 	}
 
-	public void setCount(int count) {
-		this.count = count;
+	public String getMapKey() {
+		return mapKey;
+	}
+
+	public void setMapKey(String mapKey) {
+		this.mapKey = mapKey;
+	}
+
+	public Map<String, String> getCMDMap() {
+		return CMDMap;
+	}
+
+	public void setCMDMap(Map<String, String> cMDMap) {
+		CMDMap = cMDMap;
+	}
+
+	public Map<String, String> getTargetMap() {
+		return targetMap;
+	}
+
+	public void setTargetMap(Map<String, String> targetMap) {
+		this.targetMap = targetMap;
 	}
 
 	@Override
 	public String execute() {
-		System.out.println(this.count++);
-		System.out.println(Test.sc++);
-		HttpServletRequest request = org.apache.struts2.ServletActionContext
-				.getRequest();
-		System.out.println(request.getRemoteAddr());
-		System.out.println(request.getRemoteHost());
-		System.out.println(request.getRemotePort());
-		System.out.println(request.getRemoteUser());
-
-		Visitor vis = new Visitor();
-		vis.setIp(request.getRemoteAddr());
-		vis.setHostName(request.getRemoteHost());
-		vis.setDate(new Date());
-		Cmd a = new Cmd();
-		a.setName("11");
-		a.setValue("value");
-		a.setVisitor(vis);
-		Cmd b = new Cmd();
-		b.setName("22");
-		b.setValue("value");
-		b.setVisitor(vis);
-		HashSet<Cmd> set = new HashSet<Cmd>();
-		set.add(a);
-		set.add(b);
-		vis.setCmd(set);
-
-		em.merge(vis);
-		Query query = Test.em.createQuery("select p FROM Visitor p");
-		@SuppressWarnings("unchecked")
-		List<Visitor> list = query.getResultList();
-		for (Visitor itr : list) {
-			System.out.println(itr);
-
-		}
+		CMDMap = this.adminService.getCMDMap();
+		targetMap = this.adminService.getTargetMap();
 
 		return Action.SUCCESS;
 	}
 
-	@Override
-	protected void finalize() {
-		System.out.println("bye" + this.count);
+	public String remove() {
+		System.out.println("remove" + this.mapKey);
+		this.adminService.RemoveCMD(mapKey);
+		return execute();
+	}
+	
+	public String edit(){
+		return execute();
 	}
 
 }

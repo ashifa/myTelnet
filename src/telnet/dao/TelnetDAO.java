@@ -1,6 +1,9 @@
 package telnet.dao;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
@@ -11,7 +14,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 public class TelnetDAO {
 
@@ -26,6 +28,7 @@ public class TelnetDAO {
 	private Map<String, String> targetMap = new TreeMap<String, String>();
 	private Map<String, String> CMDMap = new TreeMap<String, String>();
 	private Set<String> selectedTargetRegion = new HashSet<String>();
+	private File file;
 
 	public Set<String> getSelectedTargetRegion() {
 		return selectedTargetRegion;
@@ -35,12 +38,16 @@ public class TelnetDAO {
 		this.selectedTargetRegion = selectedTargetRegion;
 	}
 
-	public Properties getConfig() {
-		return config;
+	public String getUserName() {
+		return this.config.getProperty("userName");
 	}
 
-	public void setConfig(Properties config) {
-		this.config = config;
+	public String getPassWord() {
+		return this.config.getProperty("passWord");
+	}
+	
+	public String getPrompt() {
+		return this.config.getProperty("prompt");
 	}
 
 	public Map<String, String> getTargetMap() {
@@ -59,8 +66,28 @@ public class TelnetDAO {
 		CMDMap = cMDMap;
 	}
 
+	public void AddHost(String host, String ip) {
+		this.config.put(host, ip);
+		this.saveConfig();
+	}
+
+	public void RemoveHost(String host) {
+		this.config.remove(host);
+		this.saveConfig();
+	}
+
+	public void AddCMD(String CmdName, String CmdValue) {
+		this.config.put(CmdName, CmdValue);
+		this.saveConfig();
+	}
+
+	public void RemoveCMD(String CMD) {
+		this.config.remove(CMD);
+		this.saveConfig();
+	}
+
 	public TelnetDAO() {
-		System.out.println("in constructor of "+ this.getClass());
+		System.out.println("in constructor of " + this.getClass());
 		if (false == readConfig()) {
 			System.exit(1);
 		}
@@ -71,16 +98,17 @@ public class TelnetDAO {
 		try {
 			URL targetInfo = Thread.currentThread().getContextClassLoader()
 					.getResource("config.xml");
+
 			if (targetInfo != null) {
-				this.config.loadFromXML(new FileInputStream(targetInfo
-						.getFile()));
+				file = new File(targetInfo.getFile());
 			} else {
-				this.config.loadFromXML(new FileInputStream("config.xml"));
+				file = new File("config.xml");
 			}
+			this.config.loadFromXML(new FileInputStream(file));
 
 		} catch (IOException ex) {
-			Logger.getLogger(TelnetDAO.class.getName()).log(
-					Level.SEVERE, null, ex);
+			Logger.getLogger(TelnetDAO.class.getName()).log(Level.SEVERE, null,
+					ex);
 			return false;
 		}
 		return true;
@@ -96,8 +124,25 @@ public class TelnetDAO {
 				this.targetMap.put(str.substring(5), config.getProperty(str));
 			}
 		}
-		String[]tmp=config.getProperty("selectedTargetRegion").split(",");
+		String[] tmp = config.getProperty("selectedTargetRegion").split(",");
 		Collections.addAll(this.selectedTargetRegion, tmp);
 
 	}
+
+	private void saveConfig() {
+		try {
+			this.config.storeToXML(new FileOutputStream(file), "update");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public Map<Object,Object> getConfig() {
+		return config;
+	}
+
+
 }

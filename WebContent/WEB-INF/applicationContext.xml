@@ -17,17 +17,20 @@
 	</bean>
 
 	<!--this is test related beans -->
+	<bean id="adminService" class="telnet.service.AdminServiceImp"></bean>
 	<bean id="test" class="telnet.action.Test">
+		<property name="adminService" ref="adminService" />
 	</bean>
 
 
 	<!--this is telnet related beans -->
-	<bean id="telnetService" class="telnet.service.TelnetServiceDbImp"  scope="prototype"></bean>
+	<bean id="telnetService" class="telnet.service.TelnetServiceDbImp"
+		scope="prototype"></bean>
 	<bean id="telnetAction" class="telnet.action.TelnetAction">
 		<property name="telnetService" ref="telnetService" />
 	</bean>
 
-<!--this is hibernate related beans -->
+	<!--this is hibernate related beans -->
 	<bean
 		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
@@ -53,5 +56,5 @@
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-    <tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:annotation-driven transaction-manager="transactionManager" />
 </beans>

@@ -110,11 +110,9 @@ public class TelnetServiceDbImp implements TelnetService {
 				if (hostname.contains(region)) {
 					Future<List<String>> rs = es.submit(new TelnetThread(
 							hostname, this.telnetDAO.getTargetMap().get(
-									hostname), this.telnetDAO.getConfig()
-									.getProperty("userName"), this.telnetDAO
-									.getConfig().getProperty("passWord"),
-							this.telnetDAO.getConfig().getProperty("prompt"),
-							CMDlist));
+									hostname), this.telnetDAO.getUserName(),
+							this.telnetDAO.getPassWord(), this.telnetDAO
+									.getPrompt(), CMDlist));
 					futureList.add(rs);
 				}
 			}
@@ -188,11 +186,11 @@ public class TelnetServiceDbImp implements TelnetService {
 		vis.setDate(new Date());
 		vis.setPort(request.getRemotePort());
 		vis.setUser(request.getRemoteUser());
-		
-		HashSet<Cmd> set = new HashSet<Cmd>();		
+
+		HashSet<Cmd> set = new HashSet<Cmd>();
 
 		Cmd cmd;
-		for (String str: this.getSelectedCMD()){
+		for (String str : this.getSelectedCMD()) {
 			cmd = new Cmd();
 			cmd.setName(str);
 			cmd.setValue(this.getCMDMap().get(str));
@@ -202,12 +200,14 @@ public class TelnetServiceDbImp implements TelnetService {
 		vis.setCmd(set);
 
 		em.merge(vis);
-/*		Query query = this.em.createQuery("select p FROM Visitor p");
-		@SuppressWarnings("unchecked")
-		List<Visitor> list = query.getResultList();
-		for (Visitor itr : list) {
-			System.out.println(itr);
-
-		}*/
+		/*
+		 * Query query = this.em.createQuery("select p FROM Visitor p");
+		 * 
+		 * @SuppressWarnings("unchecked") List<Visitor> list =
+		 * query.getResultList(); for (Visitor itr : list) {
+		 * System.out.println(itr);
+		 * 
+		 * }
+		 */
 	}
 }

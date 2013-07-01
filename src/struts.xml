@@ -49,7 +49,9 @@
 			<result>/Test.jsp</result>
 		</action>
 
-
+		<action name="remove" class="telnet.action.Test" method="remove">
+			<result>/Test.jsp</result>
+		</action>
 
 	</package>
 
