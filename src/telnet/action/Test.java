@@ -18,7 +18,9 @@ public class Test extends ActionSupport {
 
 	private Map<String, String> CMDMap;
 	private Map<String, String> targetMap;
-	private String mapKey;
+	private String editKey;
+	private String editValue;
+	private boolean editFlag;
 
 	public AdminService getAdminService() {
 		return adminService;
@@ -28,12 +30,20 @@ public class Test extends ActionSupport {
 		this.adminService = adminService;
 	}
 
-	public String getMapKey() {
-		return mapKey;
+	public String getEditKey() {
+		return editKey;
 	}
 
-	public void setMapKey(String mapKey) {
-		this.mapKey = mapKey;
+	public void setEditKey(String editKey) {
+		this.editKey = editKey;
+	}
+
+	public String getEditValue() {
+		return editValue;
+	}
+
+	public void setEditValue(String editValue) {
+		this.editValue = editValue;
 	}
 
 	public Map<String, String> getCMDMap() {
@@ -52,6 +62,14 @@ public class Test extends ActionSupport {
 		this.targetMap = targetMap;
 	}
 
+	public boolean isEditFlag() {
+		return editFlag;
+	}
+
+	public void setEditFlag(boolean editFlag) {
+		this.editFlag = editFlag;
+	}
+
 	@Override
 	public String execute() {
 		CMDMap = this.adminService.getCMDMap();
@@ -61,12 +79,21 @@ public class Test extends ActionSupport {
 	}
 
 	public String remove() {
-		System.out.println("remove" + this.mapKey);
-		this.adminService.RemoveCMD(mapKey);
+		System.out.println("remove" + this.editKey);
+		this.adminService.RemoveCMD(editKey);
+		this.editKey = "";
 		return execute();
 	}
-	
-	public String edit(){
+
+	public String edit() {
+		if (this.editFlag == true) {
+			this.editFlag = false;
+		} else {
+			this.adminService.RemoveCMD(editKey);
+			this.adminService.AddCMD(editKey, editKey);
+			this.editKey = "";
+			this.editValue = "";
+		}
 		return execute();
 	}
 

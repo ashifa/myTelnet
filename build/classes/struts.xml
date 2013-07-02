@@ -7,7 +7,7 @@
 	<constant name="struts.objectFactory" value="spring" />
 	<constant name="struts.action.extension" value="do" />
 	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
-	<constant name="struts.devMode" value="true" />
+	<constant name="struts.devMode" value="false" />
 
 	<package name="myweb" namespace="/" extends="struts-default">
 
@@ -40,7 +40,7 @@
 		</action>
 
 		<action name="telnet" class="telnet.action.TelnetAction">
-			<result >/Telnet.jsp</result>
+			<result>/Telnet.jsp</result>
 			<result name="DEFAULT">/TelnetDefault.jsp</result>
 			<result name="input">/Telnet.jsp</result>
 		</action>
@@ -52,7 +52,10 @@
 		<action name="remove" class="telnet.action.Test" method="remove">
 			<result>/Test.jsp</result>
 		</action>
-
+		<action name="edit" class="telnet.action.Test" method="edit">
+			<result name="input">/Test.jsp</result>
+			<result >/Test.jsp</result>
+		</action>
 	</package>
 
 
