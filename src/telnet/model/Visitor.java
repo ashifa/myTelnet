@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,10 +18,15 @@ public class Visitor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int visitorId;
+	@Column(nullable = false)
 	private Date date;
+	@Column(nullable = false, length = 45)
 	private String ip;
+	@Column(nullable = false, length = 45)
 	private String hostName;
+	@Column(nullable = true, length = 45)
 	private String user;
+	@Column(nullable = false)
 	private int port;
 	@OneToMany(mappedBy = "visitor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Cmd> cmd;

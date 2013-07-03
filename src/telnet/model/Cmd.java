@@ -1,6 +1,7 @@
 package telnet.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,7 +15,9 @@ public class Cmd {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int cmdId;
+	@Column(nullable = false, length = 45)
 	private String name;
+	@Column(nullable = false, length = 1000)
 	private String value;
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "visitor")
