@@ -1,11 +1,11 @@
 package telnet.action;
 
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import telnet.service.TelnetService;
 
@@ -20,8 +20,6 @@ public class TelnetAction extends ActionSupport {
 
 	private String customizedCMD;
 	private List<List<String>> tblist;
-
-
 
 	public Set<String> getSelectedCMD() {
 		return this.telnetService.getSelectedCMD();
@@ -38,8 +36,6 @@ public class TelnetAction extends ActionSupport {
 	public void setSelectedTargetRegion(Set<String> selectedTargetRegion) {
 		this.telnetService.setSelectedTargetRegion(selectedTargetRegion);
 	}
-
-
 
 	public TelnetService getTelnetService() {
 		return telnetService;
@@ -80,21 +76,19 @@ public class TelnetAction extends ActionSupport {
 	public List<List<String>> getTblist() {
 		return this.tblist;
 	}
-	
- 
 
 	@Override
 	public String execute() {
+		System.out.println("read from DB");
+		ActionContext.getContext().put("isOnline", false);
+		List<List<String>> list = telnetService.getOldVersion();
+		this.setTblist(list);
+		return Action.SUCCESS;
+	}
 
-
+	public String onlineQuery() {
 		System.out.println(this.getSelectedCMD());
-		if (this.customizedCMD==null) {
-			System.out.println("read from DB");
-			List<List<String>> list = telnetService.getOldVersion();
-			this.setTblist(list);
-			return "DEFAULT";
-		}
-
+		ActionContext.getContext().put("isOnline", true);
 		if (!this.customizedCMD.isEmpty()) {
 			String customizedCMD = this.customizedCMD.contains("|||") ? this.customizedCMD
 					: this.customizedCMD + "|||.*";
@@ -104,25 +98,13 @@ public class TelnetAction extends ActionSupport {
 			this.getSelectedCMD().remove("customizedCMD");
 		}
 		if (!this.getSelectedCMD().contains(" Software Version")) {
-			this.getSelectedCMD().add( " Software Version");// must go first
-			 
-		}
+			this.getSelectedCMD().add(" Software Version");// must go first
 
+		}
 
 		List<List<String>> list = telnetService.getNewVersion();
 		this.setTblist(list);
 
 		return Action.SUCCESS;
-	}
-
-	public TelnetAction(){
-		System.out.println("in constructor of "+ this.getClass());
-	}
-	public static void main(String[] args) {
-		TelnetAction ta = new TelnetAction();
-		ta.execute();
-
-		System.out.println(ta.getTblist());
-
 	}
 }

@@ -11,12 +11,9 @@
 </head>
 <body>
 
-
 	<jsp:include page="HeadMenu.jsp" />
-	<s:div
-		cssStyle="border: 1px dashed #3c78b5;margin: 10px; margin-top: 0px; padding: 10px; ">
-		<s:div
-			cssStyle="margin: 10px; margin-top: 0px; padding: 10px;float:left">
+	<s:div cssClass="dashline ">
+		<s:div cssClass="insider">
 			<table border="1" class="adminList">
 				<tr>
 					<th>CMD name</th>
@@ -25,10 +22,10 @@
 					<th>Edit</th>
 				</tr>
 				<s:iterator value="CMDMap" status="rowstatus">
-					<s:url var="removeUrl" action="remove">
+					<s:url var="removeUrl" action="telnetAdminActionRemove">
 						<s:param name="editKey" value="key" />
 					</s:url>
-					<s:url var="editUrl" action="edit">
+					<s:url var="editUrl" action="telnetAdminActionEdit">
 						<s:param name="editKey" value="key" />
 						<s:param name="editValue" value="value" />
 						<s:param name="editFlag" value="true" />
@@ -59,10 +56,10 @@
 					<th>Edit</th>
 				</tr>
 				<s:iterator value="TargetMap" status="rowstatus">
-					<s:url var="removeUrl" action="remove">
+					<s:url var="removeUrl" action="telnetAdminActionRemove">
 						<s:param name="editKey" value="key" />
 					</s:url>
-					<s:url var="editUrl" action="edit">
+					<s:url var="editUrl" action="telnetAdminActionEdit">
 						<s:param name="editKey" value="key" />
 						<s:param name="editValue" value="value" />
 						<s:param name="editFlag" value="true" />
@@ -88,11 +85,12 @@
 				</s:iterator>
 			</table>
 		</s:div>
-		<s:div
-			cssStyle="margin: 10px; margin-top: 0px; padding: 10px;  float: left ">
-			<s:form action="edit">
-				<s:textfield name="editKey" label="key" value="%{editKey}"  cssStyle="width:350px"/>
-				<s:textfield name="editValue" label="value" value="%{editValue}"  cssStyle="width:350px" />
+		<s:div cssClass="insider">
+			<s:form action="telnetAdminActionEdit">
+				<s:textfield name="editKey" label="key" value="%{editKey}"
+					cssStyle="width:350px" />
+				<s:textfield name="editValue" label="value" value="%{editValue}"
+					cssStyle="width:350px" />
 				<s:submit label="submit" />
 			</s:form>
 		</s:div>

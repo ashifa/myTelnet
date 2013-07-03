@@ -36,10 +36,23 @@ table.queryResults tr:hover {
 table.adminList tr:hover {
 	background-color: #AAF2D3;
 }
-div.left {
-	float: left;
+
+a.menu{
+	font-size: 1.1em;
+	text-align: left;
+	padding-top: 5px;
+	padding-bottom: 4px;
+
 }
 
-div.right {
-	float: right;
+div.dashline {
+	border: 1px dashed #3c78b5;
+	margin: 5px;
+	margin-top: 0px;
+	padding: 5px;
+}
+
+div.insider {
+	padding: 5px;
+	float: left
 }

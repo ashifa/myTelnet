@@ -7,7 +7,7 @@ import telnet.service.AdminService;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class Test extends ActionSupport {
+public class TelnetAdminAction extends ActionSupport {
 
 	/**
 	 * 

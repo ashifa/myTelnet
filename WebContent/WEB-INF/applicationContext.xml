@@ -18,9 +18,11 @@
 
 	<!--this is test related beans -->
 	<bean id="adminService" class="telnet.service.AdminServiceImp"></bean>
-	<bean id="test" class="telnet.action.Test">
+	<bean id="telnetAdminAction" class="telnet.action.TelnetAdminAction">
 		<property name="adminService" ref="adminService" />
 	</bean>
+	<bean id="loginAction" class="telnet.action.LoginAction"></bean>
+	<bean id="authenticaction" class="login.interceptor.AuthenticationInterceptor"></bean>
 
 
 	<!--this is telnet related beans -->
