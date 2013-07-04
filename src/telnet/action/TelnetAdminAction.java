@@ -2,18 +2,20 @@ package telnet.action;
 
 import java.util.Map;
 
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
+
 import telnet.service.AdminService;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
+@Controller
 public class TelnetAdminAction extends ActionSupport {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 220817334781599319L;
-
+	@Resource 
 	private AdminService adminService;
 
 	private Map<String, String> CMDMap;

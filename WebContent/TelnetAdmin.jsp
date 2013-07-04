@@ -12,7 +12,7 @@
 <body>
 
 	<jsp:include page="HeadMenu.jsp" />
-	<s:div cssClass="dashline ">
+	<s:div cssClass="dashline">
 		<s:div cssClass="insider">
 			<table border="1" class="adminList">
 				<tr>

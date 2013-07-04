@@ -4,18 +4,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
+
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import telnet.service.TelnetService;
 
 ;
-
+@Controller
 public class TelnetAction extends ActionSupport {
 	private static final long serialVersionUID = 5704419762979642412L;
-	/**
-	 * 
-	 */
+
+	@Resource
 	private TelnetService telnetService;
 
 	private String customizedCMD;

@@ -71,6 +71,9 @@
 			<result>/TelnetAdmin.jsp</result>
 			<interceptor-ref name="adminStack" />
 		</action>
+		<action name="listVisitorAction" class="telnet.action.ListVisitorAction">
+		<result>/ListVisitor.jsp</result>
+		</action>
 		<action name="loginAction" class="telnet.action.LoginAction">
 			<result type="redirectAction">telnetAdminAction</result>
 			<result name="input">/Login.jsp</result>

@@ -14,6 +14,9 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class GraphicalLogServiceImp implements GraphicalLogService {
 
 	private static ArrayList<LogRecord> list = new ArrayList<LogRecord>();

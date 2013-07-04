@@ -3,10 +3,11 @@ package telnet.action;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
-
+@Controller
 public class LoginAction extends ActionSupport implements SessionAware {
 	private static final long serialVersionUID = -1143688120095248745L;
 

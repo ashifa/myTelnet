@@ -2,8 +2,10 @@ package telnet.service;
 
 import java.util.Map;
 
-import telnet.dao.TelnetDAO;
+import org.springframework.stereotype.Service;
 
+import telnet.dao.TelnetDAO;
+@Service
 public class AdminServiceImp implements AdminService {
 
 	private TelnetDAO telnetDAO = new TelnetDAO();

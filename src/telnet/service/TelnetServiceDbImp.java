@@ -21,13 +21,14 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import telnet.dao.TelnetDAO;
 import telnet.model.Cmd;
 import telnet.model.TargetInfo;
 import telnet.model.Visitor;
-
+@Service
 @Transactional
 public class TelnetServiceDbImp implements TelnetService {
 	private EntityManager em;
