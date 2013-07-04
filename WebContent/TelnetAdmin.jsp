@@ -1,13 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=GB18030"
-	pageEncoding="GB18030"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=GB18030">
 <link href="<s:url value="/mystyle.css"/>" rel="stylesheet"
 	type="text/css" />
-<title>Insert title here</title>
+<title>Update the default settings</title>
 </head>
 <body>
 
