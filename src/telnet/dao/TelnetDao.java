@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 import org.springframework.stereotype.Repository;
 @Repository
-public class TelnetDAO {
+public class TelnetDao {
 
 
 
@@ -83,7 +83,7 @@ public class TelnetDAO {
 		this.saveConfig();
 	}
 
-	public TelnetDAO() {
+	public TelnetDao() {
 		System.out.println("in constructor of " + this.getClass());
 		if (false == readConfig()) {
 			System.exit(1);
@@ -104,7 +104,7 @@ public class TelnetDAO {
 			this.config.loadFromXML(new FileInputStream(file));
 
 		} catch (IOException ex) {
-			Logger.getLogger(TelnetDAO.class.getName()).log(Level.SEVERE, null,
+			Logger.getLogger(TelnetDao.class.getName()).log(Level.SEVERE, null,
 					ex);
 			return false;
 		}

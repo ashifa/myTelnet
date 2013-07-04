@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import telnet.dao.TelnetDAO;
+import telnet.dao.TelnetDao;
 import telnet.model.Cmd;
 import telnet.model.TargetInfo;
 import telnet.model.Visitor;
@@ -40,38 +40,38 @@ public class TelnetServiceDbImp implements TelnetService {
 	}
 
 	@Resource
-	private TelnetDAO telnetDAO;
+	private TelnetDao telnetDao;
 
 	@Override
 	public Map<String, String> getTargetMap() {
 
-		return this.telnetDAO.getTargetMap();
+		return this.telnetDao.getTargetMap();
 	}
 
 	@Override
 	public void setTargetMap(Map<String, String> targetMap) {
 
-		this.telnetDAO.setTargetMap(targetMap);
+		this.telnetDao.setTargetMap(targetMap);
 	}
 
 	@Override
 	public Map<String, String> getCMDMap() {
 
-		return this.telnetDAO.getCMDMap();
+		return this.telnetDao.getCMDMap();
 	}
 
 	@Override
 	public void setCMDMap(Map<String, String> cMDMap) {
-		this.telnetDAO.setCMDMap(cMDMap);
+		this.telnetDao.setCMDMap(cMDMap);
 
 	}
 
 	public Set<String> getSelectedTargetRegion() {
-		return this.telnetDAO.getSelectedTargetRegion();
+		return this.telnetDao.getSelectedTargetRegion();
 	}
 
 	public void setSelectedTargetRegion(Set<String> selectedTargetRegion) {
-		this.telnetDAO.setSelectedTargetRegion(selectedTargetRegion);
+		this.telnetDao.setSelectedTargetRegion(selectedTargetRegion);
 	}
 
 	private Set<String> selectedCMD = new TreeSet<String>();
@@ -104,17 +104,17 @@ public class TelnetServiceDbImp implements TelnetService {
 	}
 
 	private List<Future<List<String>>> connectTarget(Collection<String> CMDlist) {
-		ExecutorService es = Executors.newFixedThreadPool(this.telnetDAO
+		ExecutorService es = Executors.newFixedThreadPool(this.telnetDao
 				.getTargetMap().size());
 		List<Future<List<String>>> futureList = new ArrayList<Future<List<String>>>();
 
-		for (String hostname : this.telnetDAO.getTargetMap().keySet()) {
-			for (String region : this.telnetDAO.getSelectedTargetRegion()) {
+		for (String hostname : this.telnetDao.getTargetMap().keySet()) {
+			for (String region : this.telnetDao.getSelectedTargetRegion()) {
 				if (hostname.contains(region)) {
 					Future<List<String>> rs = es.submit(new TelnetThread(
-							hostname, this.telnetDAO.getTargetMap().get(
-									hostname), this.telnetDAO.getUserName(),
-							this.telnetDAO.getPassWord(), this.telnetDAO
+							hostname, this.telnetDao.getTargetMap().get(
+									hostname), this.telnetDao.getUserName(),
+							this.telnetDao.getPassWord(), this.telnetDao
 									.getPrompt(), CMDlist));
 					futureList.add(rs);
 				}

@@ -6,11 +6,11 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import telnet.dao.TelnetDAO;
+import telnet.dao.TelnetDao;
 @Service
 public class AdminServiceImp implements AdminService {
 	@Resource
-	private TelnetDAO telnetDAO ;
+	private TelnetDao telnetDAO ;
 
 	@Override
 	public void AddHost(String host, String ip) {
