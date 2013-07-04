@@ -15,11 +15,9 @@ import com.opensymphony.xwork2.ActionSupport;
 public class TelnetAdminAction extends ActionSupport {
 
 	private static final long serialVersionUID = 220817334781599319L;
-	@Resource 
+	@Resource
 	private AdminService adminService;
 
-	private Map<String, String> CMDMap;
-	private Map<String, String> targetMap;
 	private String editKey;
 	private String editValue;
 	private boolean editFlag;
@@ -49,19 +47,11 @@ public class TelnetAdminAction extends ActionSupport {
 	}
 
 	public Map<String, String> getCMDMap() {
-		return CMDMap;
-	}
-
-	public void setCMDMap(Map<String, String> cMDMap) {
-		CMDMap = cMDMap;
+		return this.adminService.getCMDMap();
 	}
 
 	public Map<String, String> getTargetMap() {
-		return targetMap;
-	}
-
-	public void setTargetMap(Map<String, String> targetMap) {
-		this.targetMap = targetMap;
+		return this.adminService.getTargetMap();
 	}
 
 	public boolean isEditFlag() {
@@ -74,8 +64,6 @@ public class TelnetAdminAction extends ActionSupport {
 
 	@Override
 	public String execute() {
-		CMDMap = this.adminService.getCMDMap();
-		targetMap = this.adminService.getTargetMap();
 
 		return Action.SUCCESS;
 	}

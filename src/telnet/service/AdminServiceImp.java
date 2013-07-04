@@ -2,13 +2,15 @@ package telnet.service;
 
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
 import telnet.dao.TelnetDAO;
 @Service
 public class AdminServiceImp implements AdminService {
-
-	private TelnetDAO telnetDAO = new TelnetDAO();
+	@Resource
+	private TelnetDAO telnetDAO ;
 
 	@Override
 	public void AddHost(String host, String ip) {

@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -38,7 +39,8 @@ public class TelnetServiceDbImp implements TelnetService {
 		this.em = em;
 	}
 
-	private TelnetDAO telnetDAO = new TelnetDAO();
+	@Resource
+	private TelnetDAO telnetDAO;
 
 	@Override
 	public Map<String, String> getTargetMap() {

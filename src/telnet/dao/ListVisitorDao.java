@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import telnet.model.Visitor;
-@Repository("listVisitorDao")
+@Repository
 @Transactional
 public class ListVisitorDao {
 	private EntityManager em;

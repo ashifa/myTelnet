@@ -15,14 +15,11 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.springframework.stereotype.Repository;
+@Repository
 public class TelnetDAO {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
 
-	}
 
 	private Properties config = new Properties();
 	private Map<String, String> targetMap = new TreeMap<String, String>();
@@ -140,9 +137,9 @@ public class TelnetDAO {
 
 	}
 
-	public Map<Object,Object> getConfig() {
+/*	public Map<Object,Object> getConfig() {
 		return config;
-	}
+	}*/
 
 
 }

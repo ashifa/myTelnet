@@ -32,12 +32,15 @@ public class TelnetAction extends ActionSupport {
 		this.telnetService.setSelectedCMD(selectedCMD);
 	}
 
+	@SuppressWarnings("unchecked")
 	public Set<String> getSelectedTargetRegion() {
-		return this.telnetService.getSelectedTargetRegion();
+		return (Set<String>) ActionContext.getContext().getSession()
+				.get("selectedTargetRegion");
 	}
 
 	public void setSelectedTargetRegion(Set<String> selectedTargetRegion) {
-		this.telnetService.setSelectedTargetRegion(selectedTargetRegion);
+		ActionContext.getContext().getSession()
+				.put("selectedTargetRegion", selectedTargetRegion);
 	}
 
 	public TelnetService getTelnetService() {
@@ -82,6 +85,11 @@ public class TelnetAction extends ActionSupport {
 
 	@Override
 	public String execute() {
+
+		if (ActionContext.getContext().getSession().get("selectedTargetRegion") == null) {
+			this.setSelectedTargetRegion(this.telnetService
+					.getSelectedTargetRegion());
+		}
 		System.out.println("read from DB");
 		ActionContext.getContext().put("isOnline", false);
 		List<List<String>> list = telnetService.getOldVersion();
