@@ -17,30 +17,35 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import telnet.dao.TargetInfoDao;
 import telnet.dao.TelnetDao;
+import telnet.dao.VisitorDao;
 import telnet.model.Cmd;
 import telnet.model.TargetInfo;
 import telnet.model.Visitor;
 @Service
 @Transactional
 public class TelnetServiceDbImp implements TelnetService {
-	private EntityManager em;
+/*	private EntityManager em;
 
 	@PersistenceContext
 	public void setEntityManager(EntityManager em) {
 		this.em = em;
-	}
+	}*/
 
 	@Resource
 	private TelnetDao telnetDao;
+	
+	@Resource
+	private VisitorDao visitorDao;
+	
+	@Resource
+	private TargetInfoDao targetInfoDao;
 
 	@Override
 	public Map<String, String> getTargetMap() {
@@ -98,7 +103,7 @@ public class TelnetServiceDbImp implements TelnetService {
 				targInfo.setiP(strList.get(1));
 				targInfo.setVersion(strList.get(3));// need the third one to be
 													// version info
-				em.merge(targInfo);
+				this.targetInfoDao.save(targInfo);
 			}
 		}
 	}
@@ -162,11 +167,11 @@ public class TelnetServiceDbImp implements TelnetService {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<List<String>> getOldVersion() {
 		recordVisitor();
-		Query query = this.em.createQuery("select p FROM TargetInfo p");
-		List<TargetInfo> list = query.getResultList();
+/*		Query query = this.em.createQuery("select p FROM TargetInfo p");
+		List<TargetInfo> list = query.getResultList();*/
+		List<TargetInfo> list = this.targetInfoDao.findAll();
 		List<List<String>> listRet = new ArrayList<List<String>>();
 		for (TargetInfo targInfo : list) {
 			List<String> tmp = new ArrayList<String>();
@@ -202,7 +207,7 @@ public class TelnetServiceDbImp implements TelnetService {
 		}
 		vis.setCmd(set);
 
-		em.merge(vis);
+		this.visitorDao.save(vis);
 		/*
 		 * Query query = this.em.createQuery("select p FROM Visitor p");
 		 * 
