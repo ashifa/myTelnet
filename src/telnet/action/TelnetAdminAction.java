@@ -20,7 +20,6 @@ public class TelnetAdminAction extends ActionSupport {
 
 	private String editKey;
 	private String editValue;
-	private boolean editFlag;
 
 	public AdminService getAdminService() {
 		return adminService;
@@ -54,14 +53,6 @@ public class TelnetAdminAction extends ActionSupport {
 		return this.adminService.getTargetMap();
 	}
 
-	public boolean isEditFlag() {
-		return editFlag;
-	}
-
-	public void setEditFlag(boolean editFlag) {
-		this.editFlag = editFlag;
-	}
-
 	@Override
 	public String execute() {
 
@@ -76,14 +67,12 @@ public class TelnetAdminAction extends ActionSupport {
 	}
 
 	public String edit() {
-		if (this.editFlag == true) {
-			this.editFlag = false;
-		} else {
-			this.adminService.RemoveCMD(editKey);
-			this.adminService.AddCMD(editKey, editKey);
-			this.editKey = "";
-			this.editValue = "";
-		}
+
+		this.adminService.RemoveCMD(editKey);
+		this.adminService.AddCMD(editKey, editKey);
+		this.editKey = "";
+		this.editValue = "";
+
 		return execute();
 	}
 

@@ -23,10 +23,9 @@
 					<s:url var="removeUrl" action="telnetAdminAction_remove">
 						<s:param name="editKey" value="key" />
 					</s:url>
-					<s:url var="editUrl" action="telnetAdminAction_edit">
+					<s:url var="editUrl" action="telnetAdminAction">
 						<s:param name="editKey" value="key" />
 						<s:param name="editValue" value="value" />
-						<s:param name="editFlag" value="true" />
 					</s:url>
 					<s:if test="#rowstatus.odd == true">
 						<tr class="even">
@@ -57,10 +56,9 @@
 					<s:url var="removeUrl" action="telnetAdminAction_remove">
 						<s:param name="editKey" value="key" />
 					</s:url>
-					<s:url var="editUrl" action="telnetAdminAction_edit">
+					<s:url var="editUrl" action="telnetAdminAction">
 						<s:param name="editKey" value="key" />
 						<s:param name="editValue" value="value" />
-						<s:param name="editFlag" value="true" />
 					</s:url>
 					<s:if test="#rowstatus.odd == true">
 						<tr class="even">

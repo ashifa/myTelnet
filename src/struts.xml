@@ -6,7 +6,7 @@
 <struts>
 	<constant name="struts.objectFactory" value="spring" />
 	<constant name="struts.action.extension" value="do" />
-	<constant name="struts.enable.DynamicMethodInvocation" value="ture" />
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
 	<constant name="struts.devMode" value="false" />
 
 	<package name="myweb" namespace="/" extends="struts-default">
