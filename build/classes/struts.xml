@@ -6,7 +6,7 @@
 <struts>
 	<constant name="struts.objectFactory" value="spring" />
 	<constant name="struts.action.extension" value="do" />
-	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<constant name="struts.enable.DynamicMethodInvocation" value="ture" />
 	<constant name="struts.devMode" value="false" />
 
 	<package name="myweb" namespace="/" extends="struts-default">
@@ -48,33 +48,37 @@
 			<!-- <interceptor-ref name="myStack" /> -->
 		</action>
 
-		<action name="telnetAction" class="telnet.action.TelnetAction">
-			<result>/Telnet.jsp</result>
-		</action>
-
-		<action name="onlineQuery" class="telnet.action.TelnetAction" method="onlineQuery">
+		<action name="telnetAction_*" class="telnet.action.TelnetAction"
+			method="{1}">
 			<result>/Telnet.jsp</result>
 			<result name="input">/Telnet.jsp</result>
 		</action>
 
-		<action name="telnetAdminAction" class="telnet.action.TelnetAdminAction">
+		<!-- <action name="onlineQuery" class="telnet.action.TelnetAction" method="onlineQuery"> 
+			<result>/Telnet.jsp</result> <result name="input">/Telnet.jsp</result> </action> -->
+
+		<action name="telnetAdminAction_*" class="telnet.action.TelnetAdminAction" method="{1}">
 			<result>/TelnetAdmin.jsp</result>
+			<result name="input">/Test.jsp</result>
 			<interceptor-ref name="adminStack" />
 		</action>
 
-		<action name="telnetAdminActionRemove" class="telnet.action.TelnetAdminAction" method="remove">
+<!-- 		<action name="telnetAdminActionRemove" class="telnet.action.TelnetAdminAction"
+			method="remove">
 			<result>/TelnetAdmin.jsp</result>
 			<interceptor-ref name="adminStack" />
 		</action>
-		<action name="telnetAdminActionEdit" class="telnet.action.TelnetAdminAction" method="edit">
+		<action name="telnetAdminActionEdit" class="telnet.action.TelnetAdminAction"
+			method="edit">
 			<result name="input">/Test.jsp</result>
 			<result>/TelnetAdmin.jsp</result>
 			<interceptor-ref name="adminStack" />
-		</action>
+		</action> -->
 		<action name="listVisitorAction" class="telnet.action.ListVisitorAction">
-		<result>/ListVisitor.jsp</result>
+			<result>/ListVisitor.jsp</result>
 		</action>
-		<action name="loginAction" class="telnet.action.LoginAction">
+		<action name="loginAction_*" class="telnet.action.LoginAction"
+			method="{1}">
 			<result type="redirectAction">telnetAdminAction</result>
 			<result name="input">/Login.jsp</result>
 		</action>

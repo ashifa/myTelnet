@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
+
 @Controller
 public class LoginAction extends ActionSupport implements SessionAware {
 	private static final long serialVersionUID = -1143688120095248745L;
@@ -33,8 +34,13 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 	@Override
 	public String execute() {
-		System.out.println("in login Action");
-		if (user != null && !user.isEmpty() && user.equals(password)) {
+		System.out.println("first visit");
+		return Action.INPUT;
+	}
+
+	public String checkUserAccount() {
+		System.out.println("none first visit");
+		if (!this.user.isEmpty() && this.user.equals(this.password)) {
 			this.session.put("user", user);
 			return Action.SUCCESS;
 		} else

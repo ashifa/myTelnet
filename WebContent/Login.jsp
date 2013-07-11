@@ -12,7 +12,7 @@
 
 	<s:div
 		cssStyle="margin: 10px; margin-top: 0px; padding: 10px;  float: left ">
-		<s:form >
+		<s:form action="loginAction_checkUserAccount">
 			<s:textfield key="user" cssStyle="width:350px" />
 			<s:textfield key="password" cssStyle="width:350px" />
 			<s:submit label="submit" />

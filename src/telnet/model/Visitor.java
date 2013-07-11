@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Visitor {
@@ -18,6 +20,7 @@ public class Visitor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int visitorId;
+	@Temporal(TemporalType.TIMESTAMP) 
 	@Column(nullable = false)
 	private Date date;
 	@Column(nullable = false, length = 45)

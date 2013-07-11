@@ -13,7 +13,7 @@
 	<s:div cssClass="dashline">
 
 		<s:actionerror />
-		<s:form action="onlineQuery">
+		<s:form action="telnetAction_onlineQuery">
 
 			<s:select list="CMDMap" label="Predefined CMD" name="SelectedCMD"
 				multiple="true" listKey="key" listValue="key" value="SelectedCMD"></s:select>

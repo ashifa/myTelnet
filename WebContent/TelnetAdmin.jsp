@@ -20,10 +20,10 @@
 					<th>Edit</th>
 				</tr>
 				<s:iterator value="CMDMap" status="rowstatus">
-					<s:url var="removeUrl" action="telnetAdminActionRemove">
+					<s:url var="removeUrl" action="telnetAdminAction_remove">
 						<s:param name="editKey" value="key" />
 					</s:url>
-					<s:url var="editUrl" action="telnetAdminActionEdit">
+					<s:url var="editUrl" action="telnetAdminAction_edit">
 						<s:param name="editKey" value="key" />
 						<s:param name="editValue" value="value" />
 						<s:param name="editFlag" value="true" />
@@ -54,10 +54,10 @@
 					<th>Edit</th>
 				</tr>
 				<s:iterator value="TargetMap" status="rowstatus">
-					<s:url var="removeUrl" action="telnetAdminActionRemove">
+					<s:url var="removeUrl" action="telnetAdminAction_remove">
 						<s:param name="editKey" value="key" />
 					</s:url>
-					<s:url var="editUrl" action="telnetAdminActionEdit">
+					<s:url var="editUrl" action="telnetAdminAction_edit">
 						<s:param name="editKey" value="key" />
 						<s:param name="editValue" value="value" />
 						<s:param name="editFlag" value="true" />
@@ -84,7 +84,7 @@
 			</table>
 		</s:div>
 		<s:div cssClass="insider">
-			<s:form action="telnetAdminActionEdit">
+			<s:form action="telnetAdminAction_edit">
 				<s:textfield name="editKey" label="key" value="%{editKey}"
 					cssStyle="width:350px" />
 				<s:textfield name="editValue" label="value" value="%{editValue}"
